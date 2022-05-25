@@ -1,13 +1,14 @@
 ﻿
 using Contracts;
 using LoggerService;
+using Microsoft.EntityFrameworkCore;
 using Repository;
 using Service.Contracts;
 using Services.Implementation;
 
 
 namespace CompanyEmployees.Extensions;
-public static class ServiceExtension
+public static class ServiceExtensions
 {
     public static void ConfigureCors(this IServiceCollection services)
     {
@@ -40,5 +41,10 @@ public static class ServiceExtension
     {
         services.AddScoped<IServiceManager, ServiceManager>();
     }
-        
+
+    public static void ConfigureMySqlContext(this IServiceCollection services, IConfiguration config)
+    {
+        services.AddDbContext<RepoContext>(options => options.UseSqlServer(config.GetConnectionString("sqlConnection")));
+    }
+
 }
