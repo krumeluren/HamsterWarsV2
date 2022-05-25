@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Repository.Configuration;
 
 namespace Repository;
-public class RepositoryContext : DbContext
+public class RepoContext : DbContext
 {
-    public RepositoryContext(DbContextOptions options) : base(options){ }
+    public RepoContext(DbContextOptions options) : base(options){ }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

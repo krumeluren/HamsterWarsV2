@@ -3,12 +3,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace Repository;
-public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
+public abstract class RepoBase<T> : IRepoBase<T> where T : class
 {
 
-    public RepositoryContext _context;
+    public RepoContext _context;
 
-    public RepositoryBase(RepositoryContext context)
+    public RepoBase(RepoContext context)
     {
         _context = context;
     }
