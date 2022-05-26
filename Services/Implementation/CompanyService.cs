@@ -19,17 +19,10 @@ public class CompanyService : ICompanyService
 
     public IEnumerable<CompanyDto> GetAll(bool trackChanges)
     {
-        try
-        {
-            var companies = _repo.Company.GetAll(trackChanges);
-            //map to DTO
-            var companiesDto = _mapper.Map<IEnumerable<CompanyDto>>(companies);
-            return companiesDto;
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError($"Something went wrong inside {nameof(GetAll)} method: {ex.Message}");
-            throw;
-        }
+        var companies = _repo.Company.GetAll(trackChanges);
+        //map to DTO
+        var companiesDto = _mapper.Map<IEnumerable<CompanyDto>>(companies);
+        return companiesDto;
+
     }
 }

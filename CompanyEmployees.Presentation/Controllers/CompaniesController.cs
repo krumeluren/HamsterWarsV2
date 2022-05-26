@@ -14,18 +14,10 @@ public class CompaniesController : ControllerBase
         _service = service;
     }
 
-    
     [HttpGet()]
     public IActionResult GetAll()
     {
-        try
-        {
-            var companies = _service.CompanyService.GetAll(trackChanges: false);
-            return Ok(companies);
-        }
-        catch (Exception)
-        {
-            return StatusCode(500, "Internal server error");
-        }
+        var companies = _service.CompanyService.GetAll(trackChanges: false);
+        return Ok(companies);
     }
 }
