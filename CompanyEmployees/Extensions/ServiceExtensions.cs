@@ -4,7 +4,7 @@ using LoggerService;
 using Microsoft.EntityFrameworkCore;
 using Repository;
 using Service.Contracts;
-using Services.Implementation;
+using Services;
 
 
 namespace CompanyEmployees.Extensions;
@@ -42,7 +42,7 @@ public static class ServiceExtensions
         services.AddScoped<IServiceManager, ServiceManager>();
     }
 
-    public static void ConfigureMySqlContext(this IServiceCollection services, IConfiguration config)
+    public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration config)
     {
         services.AddDbContext<RepoContext>(options => options.UseSqlServer(config.GetConnectionString("sqlConnection")));
     }
