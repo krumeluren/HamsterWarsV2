@@ -20,7 +20,7 @@ public class EmployeeService : IEmployeeService
 
     public IEnumerable<EmployeeDto> GetAll(bool trackChanges)
     {
-        var employees = _repo.Company.GetAll(trackChanges);
+        var employees = _repo.Employee.GetAll(trackChanges);
 
         var employeesDto = _mapper.Map<IEnumerable<EmployeeDto>>(employees);
         return employeesDto;
@@ -28,7 +28,7 @@ public class EmployeeService : IEmployeeService
     
     public EmployeeDto GetById(Guid id, bool trackChanges)
     {
-        var employees = _repo.Company.GetById(id, trackChanges);
+        var employees = _repo.Employee.GetById(id, trackChanges);
         
         if (employees == null)
         {
