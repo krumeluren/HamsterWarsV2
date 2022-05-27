@@ -14,8 +14,8 @@ public class CompanyRepo : RepoBase<Company>, ICompanyRepo
         return FindAll(trackChanges).OrderBy(c => c.Name).ToList();
     }
 
-    public Company GetById(int id)
+    public Company GetById(Guid Id, bool trackChanges)
     {
-        throw new NotImplementedException();
+        return FindByCondition(c => c.Id.Equals(Id), trackChanges).SingleOrDefault();
     }
 }
