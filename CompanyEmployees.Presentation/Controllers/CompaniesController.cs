@@ -21,7 +21,7 @@ public class CompaniesController : ControllerBase
         return Ok(companies);
     }
 
-    [HttpGet("{id:guid}")]
+    [HttpGet("{Id:guid}")]
     public IActionResult GetById(Guid id)
     {
         var company = _service.CompanyService.GetById(id, trackChanges: false);

@@ -1,5 +1,8 @@
 ﻿namespace Shared.DataTransferObject;
-
-public record CompanyDto(Guid id, string name);
+public record CompanyDto
+{
+    public Guid Id { get; init; }
+    public string Name { get; init; }
+};
 
 

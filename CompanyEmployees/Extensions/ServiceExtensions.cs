@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Repository;
 using Service.Contracts;
 using Services;
-
+using Shared.DataTransferObject;
 
 namespace CompanyEmployees.Extensions;
 public static class ServiceExtensions
@@ -47,4 +47,14 @@ public static class ServiceExtensions
         services.AddDbContext<RepoContext>(options => options.UseSqlServer(config.GetConnectionString("sqlConnection")));
     }
 
+    public static IMvcBuilder AddCustomCSVFormatter(this IMvcBuilder builder)
+    {
+        builder.AddMvcOptions(config =>
+            config.OutputFormatters.Add(new CsvOutputFormatter<CompanyDto>())
+            );
+        builder.AddMvcOptions(config =>
+            config.OutputFormatters.Add(new CsvOutputFormatter<EmployeeDto>())
+            );
+        return builder;
+    }
 }
