@@ -5,4 +5,6 @@ public interface ICompanyService
 {
     IEnumerable<CompanyDto> GetAll(bool trackChanges);
     CompanyDto GetById(Guid id, bool trackChanges);
+
+    CompanyDto CreateCompany(CompanyCreateDto company);
 }

@@ -5,10 +5,8 @@ namespace Contracts;
 
 public interface ICompanyRepo
 {
-    void Create(Company company);
+    void CreateCompany(Company company);
     IEnumerable<Company> GetAll(bool trackChanges);
     Company GetById(Guid Id, bool trackChanges);
-    void Update(Company company);
-    void Delete(Company company);
 
 }

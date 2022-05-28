@@ -9,6 +9,11 @@ public class CompanyRepo : RepoBase<Company>, ICompanyRepo
     {
     }
 
+    public void CreateCompany(Company company)
+    {
+        Create(company);
+    }
+
     public IEnumerable<Company> GetAll(bool trackChanges)
     {
         return FindAll(trackChanges).OrderBy(c => c.Name).ToList();

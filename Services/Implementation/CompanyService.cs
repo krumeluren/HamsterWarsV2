@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Contracts;
 using Domain.Entities.Exceptions;
+using Domain.Entities.Models;
 using Service.Contracts;
 using Shared.DataTransferObject;
 
@@ -38,5 +39,14 @@ public class CompanyService : ICompanyService
         var companiesDto = _mapper.Map<IEnumerable<CompanyDto>>(companies);
         return companiesDto;
 
+    }
+
+    public CompanyDto CreateCompany(CompanyCreateDto company)
+    {
+        var companyEntity = _mapper.Map<Company>(company);
+        _repo.Company.CreateCompany(companyEntity);
+        _repo.Save();
+        var companyToReturn = _mapper.Map<CompanyDto>(companyEntity);
+        return companyToReturn;
     }
 }
