@@ -15,7 +15,7 @@ public class CompaniesController : ControllerBase
         _service = service;
     }
 
-    [HttpGet()]
+    [HttpGet]
     public IActionResult GetAll()
     {
         var companies = _service.CompanyService.GetAll(trackChanges: false);
@@ -29,6 +29,13 @@ public class CompaniesController : ControllerBase
         return Ok(company);
     }
 
+    [HttpGet("collection/({ids})", Name = "GetCompanies")]
+    public IActionResult GetCompanies( IEnumerable<Guid> ids)
+    {
+        var companies = _service.CompanyService.GetByIds(ids, trackChanges: false);
+        return Ok(companies);
+    }
+
     [HttpPost]
     public IActionResult Create([FromBody] CompanyCreateDto company)
     {
@@ -36,9 +43,14 @@ public class CompaniesController : ControllerBase
         {
             return BadRequest("Company object is null");
         }
-
         var companyObj = _service.CompanyService.CreateCompany(company);
-
         return CreatedAtRoute("GetCompanyById", new {id = companyObj.Id }, companyObj);
+    }
+
+    [HttpPost("collection")]
+    public IActionResult CreateCompanies([FromBody] IEnumerable<CompanyCreateDto> companies)
+    {
+        var result = _service.CompanyService.CreateCompanies(companies);
+        return CreatedAtRoute("GetCompanies", new { result.ids }, result.companies);
     }
 }

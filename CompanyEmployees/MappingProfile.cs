@@ -19,6 +19,11 @@ public class MappingProfile : Profile
         CreateMap<CompanyCreateDto, Company>()
             .ForMember(c => c.Id, opt => opt.MapFrom(src => src.Id))
             .ForMember(c => c.Name, opt => opt.MapFrom(src => src.Name));
-            
+
+        CreateMap<EmployeeCreateDto, Employee>()
+            .ForMember(c => c.Name, opt => opt.MapFrom(src => src.Name))
+            .ForMember(c => c.Age, opt => opt.MapFrom(src => src.Age));
+
+
     }       
 }

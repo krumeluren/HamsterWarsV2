@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Contracts;
 using Domain.Entities.Exceptions;
+using Domain.Entities.Models;
 using Service.Contracts;
 using Shared.DataTransferObject;
 
@@ -16,6 +17,21 @@ public class EmployeeService : IEmployeeService
         _repo = repo;
         _logger = logger;
         _mapper = mapper;
+    }
+
+    public EmployeeDto CreateEmployeeForCompany(Guid companyId, EmployeeCreateDto employee, bool trackChanges)
+    {
+        var company = _repo.Company.GetById(companyId, trackChanges);
+        if (company == null)
+        {
+            throw new CompanyNotFoundException(companyId);
+        }
+        var employeeEntity = _mapper.Map<Employee>(employee);
+        _repo.Employee.CreateEmployeeForCompany(companyId, employeeEntity);
+        _repo.Save();
+        
+        var employeeDto = _mapper.Map<EmployeeDto>(employeeEntity);
+        return employeeDto;
     }
 
     public IEnumerable<EmployeeDto> GetAll(bool trackChanges)
@@ -37,6 +53,22 @@ public class EmployeeService : IEmployeeService
         
         var employeesDto = _mapper.Map<EmployeeDto>(employees);
         return employeesDto;
+    }
+
+    public EmployeeDto GetEmployeeByCompany(Guid companyId, Guid employeeId, bool trackChanges)
+    {
+        var company = _repo.Company.GetById(companyId, trackChanges);
+        if (company == null)
+        {
+            throw new CompanyNotFoundException(companyId);
+        }
+        var employee = _repo.Employee.GetEmployeeByCompany(companyId, employeeId, trackChanges);
+        if (employee == null)
+        {
+            throw new EmployeeNotFoundException(employeeId);
+        }
+        var employeeDto = _mapper.Map<EmployeeDto>(employee);
+        return employeeDto;
     }
 
     public IEnumerable<EmployeeDto> GetEmployeesByCompany(Guid companyId, bool trackChanges)

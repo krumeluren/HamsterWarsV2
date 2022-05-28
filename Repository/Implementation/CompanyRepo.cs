@@ -23,4 +23,9 @@ public class CompanyRepo : RepoBase<Company>, ICompanyRepo
     {
         return FindByCondition(c => c.Id.Equals(Id), trackChanges).SingleOrDefault();
     }
+
+    public IEnumerable<Company> GetByIds(IEnumerable<Guid> Ids, bool trackChanges)
+    {
+        return FindByCondition(c => Ids.Contains(c.Id), trackChanges).ToList();
+    }
 }

@@ -49,4 +49,36 @@ public class CompanyService : ICompanyService
         var companyToReturn = _mapper.Map<CompanyDto>(companyEntity);
         return companyToReturn;
     }
+
+    public IEnumerable<CompanyDto> GetByIds(IEnumerable<Guid> ids, bool trackChanges)
+    {
+        if (ids == null)
+        {
+            throw new IdParametersBadRequestException();
+        }
+        var companyEntities = _repo.Company.GetByIds(ids, trackChanges);
+        if (companyEntities.Count() != ids.Count())
+        {
+            throw new CollectionByIdsBadRequestException();
+        }
+        var companiesDto = _mapper.Map<IEnumerable<CompanyDto>>(companyEntities);
+        return companiesDto;
+    }
+
+    public (IEnumerable<CompanyDto> companies, string ids) CreateCompanies(IEnumerable<CompanyCreateDto> companies)
+    {
+        if (companies == null)
+        {
+            throw new CompanyCollectionBadRequestException();
+        }
+        var companyEntities = _mapper.Map<IEnumerable<Company>>(companies);
+        foreach (var company in companyEntities)
+        {
+            _repo.Company.CreateCompany(company);
+        }
+        _repo.Save();
+        var companiesDto = _mapper.Map<IEnumerable<CompanyDto>>(companyEntities);
+        var ids = string.Join(",", companiesDto.Select(x => x.Id));
+        return (companiesDto, ids);
+    }
 }
