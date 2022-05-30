@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Contracts;
-
+﻿namespace Contracts;
 public interface IRepoManager
 {
     public ICompanyRepo Company { get; }
     public IEmployeeRepo Employee { get; }
-
+    public IHamsterRepo Hamster { get; }
+    public IBattleRepo Battle { get; }
     public void Save();
 }

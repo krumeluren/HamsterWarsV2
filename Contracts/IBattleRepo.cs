@@ -1,5 +1,5 @@
 ﻿using Domain.Entities.Models;
-namespace Repo.Contracts;
+namespace Contracts;
 public interface IBattleRepo
 {
     IEnumerable<Battle> GetAll(bool trackChanges);

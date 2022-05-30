@@ -3,19 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repository;
 
 #nullable disable
 
-namespace CompanyEmployees.Migrations
+namespace HamsterWars.Migrations
 {
     [DbContext(typeof(RepoContext))]
-    [Migration("20220525190215_InitialData")]
-    partial class InitialData
+    partial class RepoContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -23,6 +21,32 @@ namespace CompanyEmployees.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("Domain.Entities.Models.Battle", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int?>("LoserHamsterId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("TimeOfPost")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("WinnerHamsterId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LoserHamsterId");
+
+                    b.HasIndex("WinnerHamsterId");
+
+                    b.ToTable("Battles");
+                });
 
             modelBuilder.Entity("Domain.Entities.Models.Company", b =>
                 {
@@ -97,6 +121,59 @@ namespace CompanyEmployees.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Domain.Entities.Models.Hamster", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("Age")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FavFood")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Games")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImgName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Losses")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Loves")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Wins")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Hamsters");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Models.Battle", b =>
+                {
+                    b.HasOne("Domain.Entities.Models.Hamster", "LoserHamster")
+                        .WithMany("BattlesLost")
+                        .HasForeignKey("LoserHamsterId");
+
+                    b.HasOne("Domain.Entities.Models.Hamster", "WinnerHamster")
+                        .WithMany("BattlesWon")
+                        .HasForeignKey("WinnerHamsterId");
+
+                    b.Navigation("LoserHamster");
+
+                    b.Navigation("WinnerHamster");
+                });
+
             modelBuilder.Entity("Domain.Entities.Models.Employee", b =>
                 {
                     b.HasOne("Domain.Entities.Models.Company", "Company")
@@ -111,6 +188,13 @@ namespace CompanyEmployees.Migrations
             modelBuilder.Entity("Domain.Entities.Models.Company", b =>
                 {
                     b.Navigation("Employees");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Models.Hamster", b =>
+                {
+                    b.Navigation("BattlesLost");
+
+                    b.Navigation("BattlesWon");
                 });
 #pragma warning restore 612, 618
         }

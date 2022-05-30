@@ -1,9 +1,9 @@
-﻿using CompanyEmployees.Presentation.ModelBinders;
+﻿using HamsterWars.Presentation.ModelBinders;
 using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
 using Shared.DataTransferObject.Company;
 
-namespace CompanyEmployees.Presentation.Controllers;
+namespace HamsterWars.Presentation.Controllers;
 
 [Route("api/companies")]
 [ApiController]

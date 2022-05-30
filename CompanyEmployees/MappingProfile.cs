@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
 using Domain.Entities.Models;
+using Shared.DataTransferObject;
 using Shared.DataTransferObject.Company;
 using Shared.DataTransferObject.Employee;
 
-namespace CompanyEmployees;
+namespace HamsterWars;
 public class MappingProfile : Profile
 {
     public MappingProfile()
@@ -29,6 +30,17 @@ public class MappingProfile : Profile
         
         CreateMap<EmployeeUpdateDto, Employee>();
         CreateMap<EmployeeUpdateDto, Employee>().ReverseMap();
-        
+
+
+        CreateMap<Hamster, HamsterGetDto>();
+        CreateMap<HamsterPostDto, Hamster>();
+        CreateMap<HamsterPutDto, Hamster>();
+        CreateMap<HamsterPostDto, Hamster>().ReverseMap();
+        CreateMap<HamsterPutDto, Hamster>().ReverseMap();
+
+        CreateMap<Battle, BattleGetDto>();
+        CreateMap<BattlePostDto, Battle>();
+        CreateMap<BattlePostDto, Battle>().ReverseMap();
+
     }       
 }

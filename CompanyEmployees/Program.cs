@@ -1,9 +1,8 @@
-using CompanyEmployees.Extensions;
+using HamsterWars.Extensions;
 using Contracts;
 using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.Extensions.DependencyInjection;
 using NLog;
-using Shared.DataTransferObject;
+
 
 var builder = WebApplication.CreateBuilder(args);
 LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(),"/nlog.config"));
@@ -23,7 +22,7 @@ builder.Services.AddControllers(config => {
     config.ReturnHttpNotAcceptable = true;
 }).AddXmlDataContractSerializerFormatters()
   .AddCustomCSVFormatter()
-    .AddApplicationPart(typeof(CompanyEmployees.Presentation.AssemblyReference).Assembly);
+    .AddApplicationPart(typeof(HamsterWars.Presentation.AssemblyReference).Assembly);
 
 var app = builder.Build();
 

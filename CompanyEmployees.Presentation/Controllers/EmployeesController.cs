@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
 using Shared.DataTransferObject.Employee;
 
-namespace CompanyEmployees.Presentation.Controllers;
+namespace HamsterWars.Presentation.Controllers;
 
 
 [Route("api/companies/{companyId}/employees")]

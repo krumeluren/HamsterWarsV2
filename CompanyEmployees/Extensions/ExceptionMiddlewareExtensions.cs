@@ -5,7 +5,7 @@ using Domain.Entities.Exceptions;
 using Microsoft.AspNetCore.Diagnostics;
 using System.Net;
 
-namespace CompanyEmployees.Extensions;
+namespace HamsterWars.Extensions;
 public static class ExceptionMiddlewareExtensions
 {
     public static void ConfigureExceptionHandler(this WebApplication app, ILoggerManager logger)

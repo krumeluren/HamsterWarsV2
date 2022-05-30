@@ -7,7 +7,6 @@ public class RepoContext : DbContext
 {
     public RepoContext(DbContextOptions options) : base(options){ }
 
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new CompanyConfig());
@@ -15,4 +14,6 @@ public class RepoContext : DbContext
     }
     public DbSet<Company> Companies { get; set; }
     public DbSet<Employee> Employees { get; set; }
+    public DbSet<Hamster> Hamsters { get; set; }
+    public DbSet<Battle> Battles { get; set; }
 }

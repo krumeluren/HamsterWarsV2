@@ -1,4 +1,4 @@
-﻿namespace CompanyEmployees.Presentation;
+﻿namespace HamsterWars.Presentation;
 public static class AssemblyReference
 {
     

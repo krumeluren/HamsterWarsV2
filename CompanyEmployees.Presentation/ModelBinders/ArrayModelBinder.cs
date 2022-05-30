@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Reflection;
 
-namespace CompanyEmployees.Presentation.ModelBinders;
+namespace HamsterWars.Presentation.ModelBinders;
 
 /// <summary>
 /// Convert comma separated string list from client to a IEnumerable of guids

@@ -5,10 +5,11 @@ using Microsoft.EntityFrameworkCore;
 using Repository;
 using Service.Contracts;
 using Services;
+using Shared.DataTransferObject;
 using Shared.DataTransferObject.Company;
 using Shared.DataTransferObject.Employee;
 
-namespace CompanyEmployees.Extensions;
+namespace HamsterWars.Extensions;
 public static class ServiceExtensions
 {
     public static void ConfigureCors(this IServiceCollection services)
@@ -55,6 +56,12 @@ public static class ServiceExtensions
             );
         builder.AddMvcOptions(config =>
             config.OutputFormatters.Add(new CsvOutputFormatter<EmployeeDto>())
+            );
+        builder.AddMvcOptions(config =>
+            config.OutputFormatters.Add(new CsvOutputFormatter<HamsterGetDto>())
+            );
+        builder.AddMvcOptions(config =>
+            config.OutputFormatters.Add(new CsvOutputFormatter<BattleGetDto>())
             );
         return builder;
     }

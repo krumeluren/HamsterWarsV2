@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Design;
 using Repository;
 
-namespace CompanyEmployees.ContextFactory;
+namespace HamsterWars.ContextFactory;
 
 public class RepositoryContextFactory : IDesignTimeDbContextFactory<RepoContext>
 {
@@ -16,7 +16,7 @@ public class RepositoryContextFactory : IDesignTimeDbContextFactory<RepoContext>
         var builder = new DbContextOptionsBuilder<RepoContext>()
             .UseSqlServer(config
             .GetConnectionString("sqlConnection"),
-            b => b.MigrationsAssembly("CompanyEmployees")
+            b => b.MigrationsAssembly("HamsterWars")
             );
 
         return new RepoContext(builder.Options);
