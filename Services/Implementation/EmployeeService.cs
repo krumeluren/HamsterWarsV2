@@ -3,7 +3,7 @@ using Contracts;
 using Domain.Entities.Exceptions;
 using Domain.Entities.Models;
 using Service.Contracts;
-using Shared.DataTransferObject;
+using Shared.DataTransferObject.Employee;
 
 namespace Services.Implementation;
 public class EmployeeService : IEmployeeService
@@ -34,6 +34,22 @@ public class EmployeeService : IEmployeeService
         return employeeDto;
     }
 
+    public void DeleteEmployeeInCompany(Guid companyId, Guid employeeId, bool trackChanges)
+    {
+        var company = _repo.Company.GetById(companyId, trackChanges);
+        if (company == null)
+        {
+            throw new CompanyNotFoundException(companyId);
+        }
+        var employee = _repo.Employee.GetEmployeeByCompany(companyId, employeeId, trackChanges);
+        if (employee == null)
+        {
+            throw new EmployeeNotFoundException(employeeId);
+        }
+        _repo.Employee.DeleteEmployee(employee);
+        _repo.Save();
+    }
+
     public IEnumerable<EmployeeDto> GetAll(bool trackChanges)
     {
         var employees = _repo.Employee.GetAll(trackChanges);
@@ -62,12 +78,12 @@ public class EmployeeService : IEmployeeService
         {
             throw new CompanyNotFoundException(companyId);
         }
-        var employee = _repo.Employee.GetEmployeeByCompany(companyId, employeeId, trackChanges);
-        if (employee == null)
+        var employeeEntity = _repo.Employee.GetEmployeeByCompany(companyId, employeeId, trackChanges);
+        if (employeeEntity == null)
         {
             throw new EmployeeNotFoundException(employeeId);
         }
-        var employeeDto = _mapper.Map<EmployeeDto>(employee);
+        var employeeDto = _mapper.Map<EmployeeDto>(employeeEntity);
         return employeeDto;
     }
 
@@ -81,5 +97,21 @@ public class EmployeeService : IEmployeeService
         var employees = _repo.Employee.GetEmployeesByCompany(companyId, trackChanges);
         var employeesDto = _mapper.Map<IEnumerable<EmployeeDto>>(employees);
         return employeesDto;
+    }
+
+    public void UpdateEmployeeInCompany(Guid companyId, Guid employeeId, EmployeeUpdateDto employee, bool companytrackChanges, bool employeeTrackChanges)
+    {
+        var company = _repo.Company.GetById(companyId, companytrackChanges);
+        if (company == null)
+        {
+            throw new CompanyNotFoundException(companyId);
+        }
+        var employeeEntity = _repo.Employee.GetEmployeeByCompany(companyId, employeeId, employeeTrackChanges);
+        if (employeeEntity == null)
+        {
+            throw new EmployeeNotFoundException(employeeId);
+        }
+        _mapper.Map(employee, employeeEntity);
+        _repo.Save();
     }
 }

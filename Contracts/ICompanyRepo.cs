@@ -9,4 +9,5 @@ public interface ICompanyRepo
     IEnumerable<Company> GetAll(bool trackChanges);
     Company GetById(Guid Id, bool trackChanges);
     IEnumerable<Company> GetByIds(IEnumerable<Guid> Ids, bool trackChanges);
+    void DeleteCompany(Company company);
 }

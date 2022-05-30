@@ -2,7 +2,7 @@
 
 using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
-using Shared.DataTransferObject;
+using Shared.DataTransferObject.Employee;
 
 namespace CompanyEmployees.Presentation.Controllers;
 
@@ -41,10 +41,35 @@ public class EmployeesController : ControllerBase
         {
             return BadRequest("Employee DTO is null");
         }
+        if (!ModelState.IsValid)
+        {
+            return UnprocessableEntity(ModelState);
+        }
         var employeeToReturn = _service.EmployeeService
             .CreateEmployeeForCompany(companyId, employee, trackChanges: false);
 
         return CreatedAtRoute("GetEmployeeByCompany", new {companyId, employeeId = employeeToReturn.Id }, employeeToReturn);
     }
+
+    [HttpDelete("{employeeId:guid}")]
+    public IActionResult DeleteEmployeeInCompany(Guid companyId, Guid employeeId)
+    {
+        _service.EmployeeService.DeleteEmployeeInCompany(companyId, employeeId, trackChanges: false);
+        return NoContent();
+    }
+
+    [HttpPut("{employeeId:guid}")]
+    public IActionResult UpdateEmployeeInCompany(Guid companyId, Guid employeeId,
+        [FromBody] EmployeeUpdateDto employee)
+    {
+        if (employee == null)
+        {
+            return BadRequest("Employee DTO is null");
+        }
+        _service.EmployeeService.UpdateEmployeeInCompany(companyId, employeeId, employee,
+            companyTrackChanges: false, employeeTrackChanges: true);
+        return NoContent();
+    }
+
 }
 

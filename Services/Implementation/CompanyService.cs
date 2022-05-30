@@ -3,7 +3,7 @@ using Contracts;
 using Domain.Entities.Exceptions;
 using Domain.Entities.Models;
 using Service.Contracts;
-using Shared.DataTransferObject;
+using Shared.DataTransferObject.Company;
 
 namespace Services.Implementation;
 public class CompanyService : ICompanyService
@@ -38,7 +38,6 @@ public class CompanyService : ICompanyService
         
         var companiesDto = _mapper.Map<IEnumerable<CompanyDto>>(companies);
         return companiesDto;
-
     }
 
     public CompanyDto CreateCompany(CompanyCreateDto company)
@@ -80,5 +79,16 @@ public class CompanyService : ICompanyService
         var companiesDto = _mapper.Map<IEnumerable<CompanyDto>>(companyEntities);
         var ids = string.Join(",", companiesDto.Select(x => x.Id));
         return (companiesDto, ids);
+    }
+
+    public void DeleteCompany(Guid companyId, bool trackChanges)
+    {
+        var company = _repo.Company.GetById(companyId, trackChanges);
+        if (company == null)
+        {
+            throw new CompanyNotFoundException(companyId);
+        }
+        _repo.Company.DeleteCompany(company);
+        _repo.Save();
     }
 }

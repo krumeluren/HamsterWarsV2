@@ -5,7 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Repository;
 using Service.Contracts;
 using Services;
-using Shared.DataTransferObject;
+using Shared.DataTransferObject.Company;
+using Shared.DataTransferObject.Employee;
 
 namespace CompanyEmployees.Extensions;
 public static class ServiceExtensions

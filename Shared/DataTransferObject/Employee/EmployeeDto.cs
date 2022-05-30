@@ -1,4 +1,4 @@
-﻿namespace Shared.DataTransferObject;
+﻿namespace Shared.DataTransferObject.Employee;
 public record EmployeeDto
 {
     public Guid Id { get; init; }

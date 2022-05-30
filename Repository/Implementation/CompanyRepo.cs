@@ -14,6 +14,11 @@ public class CompanyRepo : RepoBase<Company>, ICompanyRepo
         Create(company);
     }
 
+    public void DeleteCompany(Company company)
+    {
+        Delete(company);
+    }
+
     public IEnumerable<Company> GetAll(bool trackChanges)
     {
         return FindAll(trackChanges).OrderBy(c => c.Name).ToList();

@@ -35,5 +35,8 @@ public class EmployeeRepo : RepoBase<Employee>, IEmployeeRepo
         Create(employee);
     }
 
-
+    public void DeleteEmployee(Employee employee)
+    {
+        Delete(employee);
+    }
 }
