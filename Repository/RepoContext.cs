@@ -11,6 +11,8 @@ public class RepoContext : DbContext
     {
         modelBuilder.ApplyConfiguration(new CompanyConfig());
         modelBuilder.ApplyConfiguration(new EmployeeConfig());
+        modelBuilder.ApplyConfiguration(new HamsterConfig());
+        modelBuilder.ApplyConfiguration(new BattleConfig());
     }
     public DbSet<Company> Companies { get; set; }
     public DbSet<Employee> Employees { get; set; }

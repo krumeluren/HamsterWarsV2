@@ -27,14 +27,14 @@ namespace HamsterWars.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Age = table.Column<int>(type: "int", nullable: false),
-                    FavFood = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Loves = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ImgName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Wins = table.Column<int>(type: "int", nullable: true),
-                    Losses = table.Column<int>(type: "int", nullable: true),
-                    Games = table.Column<int>(type: "int", nullable: true)
+                    FavFood = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    Loves = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    ImgName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Wins = table.Column<int>(type: "int", nullable: false),
+                    Losses = table.Column<int>(type: "int", nullable: false),
+                    Games = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -89,12 +89,24 @@ namespace HamsterWars.Migrations
             migrationBuilder.InsertData(
                 table: "Companies",
                 columns: new[] { "CompanyId", "Name" },
-                values: new object[] { new Guid("3d490a70-94ce-4d15-9494-5248280c2ce3"), "Admin_Solutions Ltd" });
+                values: new object[,]
+                {
+                    { new Guid("3d490a70-94ce-4d15-9494-5248280c2ce3"), "Admin_Solutions Ltd" },
+                    { new Guid("c9d4c053-49b6-410c-bc78-2d54a9991870"), "IT_Solutions Ltd" }
+                });
 
             migrationBuilder.InsertData(
-                table: "Companies",
-                columns: new[] { "CompanyId", "Name" },
-                values: new object[] { new Guid("c9d4c053-49b6-410c-bc78-2d54a9991870"), "IT_Solutions Ltd" });
+                table: "Hamsters",
+                columns: new[] { "Id", "Age", "FavFood", "Games", "ImgName", "Losses", "Loves", "Name", "Wins" },
+                values: new object[,]
+                {
+                    { 1, 1, "Nuts", 0, "1.jpg", 0, "Running", "Hamster1", 0 },
+                    { 2, 2, "Carrot", 0, "2.jpg", 0, "Sleeping", "Hamster2", 0 },
+                    { 3, 3, "Lettuce", 0, "3.jpg", 0, "Climbing", "Hamster3", 0 },
+                    { 4, 4, "Spinach", 0, "4.jpg", 0, "Digging", "Hamster4", 0 },
+                    { 5, 5, "Banana", 0, "5.jpg", 0, "Jumping", "Hamster5", 0 },
+                    { 6, 6, "Carrot", 0, "6.jpg", 0, "Running", "Hamster6", 0 }
+                });
 
             migrationBuilder.InsertData(
                 table: "Employees",

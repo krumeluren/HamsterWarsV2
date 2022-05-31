@@ -4,7 +4,7 @@ namespace Domain.Entities.Models;
 public class Battle
 {
     public int Id { get; set; }
-    public DateTime TimeOfPost { get; set; }
+    public DateTime TimeOfPost { get; set; } = DateTime.Now;
     public int? WinnerHamsterId { get; set; }
     
     [ForeignKey("WinnerHamsterId")]
@@ -12,9 +12,4 @@ public class Battle
     public int? LoserHamsterId { get; set; }
     [ForeignKey("LoserHamsterId")]
     public virtual Hamster? LoserHamster { get; set; }
-    
-    public Battle()
-    {
-        TimeOfPost = DateTime.Now;
-    }
 }

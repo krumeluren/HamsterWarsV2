@@ -12,7 +12,7 @@ using Repository;
 namespace HamsterWars.Migrations
 {
     [DbContext(typeof(RepoContext))]
-    [Migration("20220530163744_Init")]
+    [Migration("20220531133802_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -135,30 +135,111 @@ namespace HamsterWars.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("FavFood")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
-                    b.Property<int?>("Games")
+                    b.Property<int>("Games")
                         .HasColumnType("int");
 
                     b.Property<string>("ImgName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
-                    b.Property<int?>("Losses")
+                    b.Property<int>("Losses")
                         .HasColumnType("int");
 
                     b.Property<string>("Loves")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
-                    b.Property<int?>("Wins")
+                    b.Property<int>("Wins")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.ToTable("Hamsters");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Age = 1,
+                            FavFood = "Nuts",
+                            Games = 0,
+                            ImgName = "1.jpg",
+                            Losses = 0,
+                            Loves = "Running",
+                            Name = "Hamster1",
+                            Wins = 0
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Age = 2,
+                            FavFood = "Carrot",
+                            Games = 0,
+                            ImgName = "2.jpg",
+                            Losses = 0,
+                            Loves = "Sleeping",
+                            Name = "Hamster2",
+                            Wins = 0
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Age = 3,
+                            FavFood = "Lettuce",
+                            Games = 0,
+                            ImgName = "3.jpg",
+                            Losses = 0,
+                            Loves = "Climbing",
+                            Name = "Hamster3",
+                            Wins = 0
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Age = 4,
+                            FavFood = "Spinach",
+                            Games = 0,
+                            ImgName = "4.jpg",
+                            Losses = 0,
+                            Loves = "Digging",
+                            Name = "Hamster4",
+                            Wins = 0
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Age = 5,
+                            FavFood = "Banana",
+                            Games = 0,
+                            ImgName = "5.jpg",
+                            Losses = 0,
+                            Loves = "Jumping",
+                            Name = "Hamster5",
+                            Wins = 0
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Age = 6,
+                            FavFood = "Carrot",
+                            Games = 0,
+                            ImgName = "6.jpg",
+                            Losses = 0,
+                            Loves = "Running",
+                            Name = "Hamster6",
+                            Wins = 0
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Models.Battle", b =>

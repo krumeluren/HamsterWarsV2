@@ -7,6 +7,8 @@ public class CompanyConfig : IEntityTypeConfiguration<Company>
 {
     public void Configure(EntityTypeBuilder<Company> builder)
     {
+        
+
         builder.HasData
         (
         new Company

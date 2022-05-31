@@ -10,9 +10,9 @@ public class Hamster
     public string? FavFood { get; set; }
     public string? Loves { get; set; }
     public string? ImgName { get; set; }
-    public int? Wins { get; set; } = 0;
-    public int? Losses { get; set; } = 0;
-    public int? Games { get; set; } = 0;
+    public int Wins { get; set; } = 0;
+    public int Losses { get; set; } = 0;
+    public int Games { get; set; } = 0;
 
     [InverseProperty("WinnerHamster")]
     public ICollection<Battle>? BattlesWon {get; private set; }

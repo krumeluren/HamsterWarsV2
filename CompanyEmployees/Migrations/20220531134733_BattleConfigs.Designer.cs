@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repository;
 
@@ -11,9 +12,10 @@ using Repository;
 namespace HamsterWars.Migrations
 {
     [DbContext(typeof(RepoContext))]
-    partial class RepoContextModelSnapshot : ModelSnapshot
+    [Migration("20220531134733_BattleConfigs")]
+    partial class BattleConfigs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -267,14 +269,11 @@ namespace HamsterWars.Migrations
                 {
                     b.HasOne("Domain.Entities.Models.Hamster", "LoserHamster")
                         .WithMany("BattlesLost")
-                        .HasForeignKey("LoserHamsterId")
-                        .OnDelete(DeleteBehavior.SetNull);
-                    ;
+                        .HasForeignKey("LoserHamsterId");
 
                     b.HasOne("Domain.Entities.Models.Hamster", "WinnerHamster")
                         .WithMany("BattlesWon")
-                        .HasForeignKey("WinnerHamsterId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .HasForeignKey("WinnerHamsterId");
 
                     b.Navigation("LoserHamster");
 
