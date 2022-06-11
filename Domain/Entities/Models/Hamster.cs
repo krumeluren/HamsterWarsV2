@@ -15,7 +15,7 @@ public class Hamster
     public int Games { get; set; } = 0;
 
     [InverseProperty("WinnerHamster")]
-    public ICollection<Battle>? BattlesWon {get; private set; }
+    public ICollection<Battle>? BattlesWon { get; private set; }
     [InverseProperty("LoserHamster")]
     public ICollection<Battle>? BattlesLost { get; set; }
 }

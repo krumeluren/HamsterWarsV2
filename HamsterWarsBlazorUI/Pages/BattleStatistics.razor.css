@@ -1,0 +1,49 @@
+﻿.card-container {
+    width: 150px;
+    margin: auto;
+}
+
+
+
+.grid-container {
+    flex-wrap: wrap;
+    width: 100%;
+    display: inline-flex;
+}
+
+
+    .card-container:first-child{
+        margin-right: 2px;
+    }
+
+    .card-container:last-child {
+        margin-left: 2px;
+    }
+
+.grid-wrap {
+    padding-top: 50px;
+    flex-wrap: wrap;
+    width: auto;
+    display: block;
+    margin: auto;
+}
+
+
+
+/*Tablet Portrait*/
+@media (max-width: 600px) {
+    grid-wrap {
+        width: 100vw;
+    }
+}
+/*Tablet Portrait*/
+@media (max-width: 360px) {
+    .card-container:first-child {
+        margin-right: auto;
+    }
+
+    .card-container:last-child {
+        margin-left: auto;
+    }
+}
+

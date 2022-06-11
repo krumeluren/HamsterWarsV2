@@ -1,0 +1,27 @@
+﻿Använder CompanyEmployeeDEMO som boilerplate.
+Lagt till hamster och battle entities. Skapat interface för repository och services och implementerar utan någon logik ännu.
+Skapat ett controller projekt med tomma hamster och battle controllers.
+Modifierat relevanta klasser för att intergrera hamster och battle.
+
+Dag 2
+Lagt till configurations för hamster och battle, max namn längd osv. Skapat testdata. 
+
+Skapat enkel logik i HamsterController så alla resurser når service metoderna. Ska utvidgas med felhantering senare.  
+Testat alla HamsterController resurser med Postman/webbläsare så att de kan nås av frontend. 
+
+Dag 3
+Implementerar logik i Hamster Repository och Service metoderna så att man kan nå och ändra i databasen från HamsterController. 
+Lagt till valideringsattribut för de olika Hamster DTOs.
+Lagt till och testat crud med Postman + testat olika situationer och felhanteringar.
+
+Dag 4
+Implementerat Repo och service för Battles.
+Gjort så att OnDelete av en Hamster sätter alla referencer till null 
+så att matcherna som en hamster deltagit i kan vara kvar även om hamstern tas bort.
+Lagt till Swagger
+
+
+Dag 5 
+Lagt till och kopplat ihop det tidigare frontend projektet med det nya APIet.
+Hantering för uppladdning och hämtning av bildfiler emellan frontend och backend så att frontend är helt separerad.
+Utvecklat på services och controller resurser för Battles.

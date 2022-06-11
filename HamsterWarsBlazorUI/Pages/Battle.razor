@@ -1,0 +1,108 @@
+﻿@using HamsterWarsBlazorUI.Models
+
+@inject HttpClient Http
+@page "/battle"
+<PageTitle>Battle</PageTitle>
+
+<BattleStatistics hamsters="@previousHamsters"></BattleStatistics>
+
+<div class="p-1 text-center bg-light">
+    <h1 class="p-2 px-3 text-uppercase text-primary">Battle</h1>
+
+    @if (hamsters == null)
+    {
+        <p><em>Loading new battle...</em></p>
+    }
+    else
+    {
+        if (hamsters.Length <= 0)
+        {
+            <p><em>No hamsters are available...</em></p>
+        }
+        else
+        {
+            <h4 class="mb-3 text-uppercase text-secondary">
+                <span class="text-info">@hamsters[0].Name</span> <span>Versus</span> <span class="text-danger">@hamsters[1].Name</span>
+            </h4>
+
+            <div class="row">
+                @foreach (var hamster in hamsters)
+                {
+                    <div style="cursor:pointer" class="card-container" @onclick="()=>UserVote(hamster)">
+                        <HamsterCard hamster="@hamster"></HamsterCard>
+                    </div>
+                }
+            </div>
+        }
+    }
+</div>
+
+@code {
+    private Hamster[]? previousHamsters;
+
+    private Hamster[]? hamsters;
+
+    protected override async Task OnInitializedAsync()
+    {
+        hamsters = null;
+        var hamster1 = await Http.GetFromJsonAsync<Hamster>("/api/hamsters/random");
+        var hamster2 = await Http.GetFromJsonAsync<Hamster>("/api/hamsters/random");
+
+        //Retry 3 times
+        for (int i = 0; i < 3; i++)
+        {
+            if (hamster1 == null || hamster2 == null || hamster1.Id == hamster2.Id)
+            {
+                hamster1 = await Http.GetFromJsonAsync<Hamster>("/api/hamsters/random");
+                hamster2 = await Http.GetFromJsonAsync<Hamster>("/api/hamsters/random");
+            }
+            else
+            {
+                break;
+            }
+        }
+        if (hamster1 == null || hamster2 == null || hamster1.Id == hamster2.Id)
+        {
+            throw new InvalidOperationException("Could not find two different hamsters to battle");
+        }       
+        hamsters = new Hamster[] { hamster1, hamster2 };
+    }
+
+    private void UserVote(Hamster votedfor)
+    {
+        if (hamsters == null)
+        {
+            Console.WriteLine("hamsters is null");
+            return;
+        }
+        //Find loser
+        Hamster loser = hamsters.Where(h => h != votedfor).First();
+        Vote(votedfor, loser);
+    }
+
+    /// <summary>
+    /// Post the winner and loser to the server 
+    /// </summary>
+    /// <param name="winner"></param>
+    /// <param name="loser"></param>
+    private async void Vote(Hamster winner, Hamster loser)
+    {
+        var result = new List<Hamster>();
+        result.Add(winner);
+        result.Add(loser);
+        Console.WriteLine("Vote submitted");
+        await Http.PostAsJsonAsync("api/hamster/battleresult", result);
+        Update();
+    }
+
+    /// <summary>
+    /// Create a new battle
+    /// </summary>
+    private async void Update()
+    {
+        previousHamsters = hamsters;
+        hamsters = await Http.GetFromJsonAsync<Hamster[]?>("api/hamster/random");
+        StateHasChanged();
+    }
+
+}

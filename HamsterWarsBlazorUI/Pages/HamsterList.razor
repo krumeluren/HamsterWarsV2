@@ -1,0 +1,70 @@
+﻿@inject HttpClient Http;
+@page "/hamsterlist"
+@using HamsterWarsBlazorUI.Models
+
+<div class="p-1 text-center bg-light">
+    <h1 class="p-2 px-3 text-uppercase text-primary">Hamster List</h1>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col" class="border-0 bg-light">
+                <div class="p-2 px-3 text-uppercase">Hamster</div>
+            </th>
+            <th scope="col" class="border-0 bg-light">
+                <div class="py-2 text-uppercase">Favourite Food / Activity</div>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (hamsters == null)
+        {
+            <tr>
+                <th>
+                    <p><em>Loading...</em></p>
+                </th>
+            </tr>
+        }
+        else
+        {
+            @foreach (var hamster in hamsters)
+            {
+                <tr>
+                    <th scope="row" class="border-0">
+                        <div class="p-2">
+                            <img src="@string.Format($"data:image/png;base64,{hamster.ImgData}")" alt="" width="70" class="img-fluid rounded shadow-sm">
+                            <div class="ml-3 d-inline-block align-middle">
+                                <h5 class="mb-0 text-dark d-inline-block align-middle">
+                                    @hamster.Name
+                                </h5>
+                                <span class="text-muted font-weight-normal font-italic d-block">
+                                    <span class="text-muted fw-light font-italic ">
+                                        Age:
+                                    </span>
+                                    @hamster.Age
+                                </span>
+
+                            </div>
+                        </div>
+                    </th>
+                    <td class="border-0 align-middle">
+
+                        <strong class="text-secondary">@hamster.FavFood</strong>
+                        <span style="white-space: nowrap;" class="text-muted text-secondary  font-italic  d-block">
+                            @hamster.Loves
+                        </span>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+@code {
+    private Hamster[]? hamsters;
+
+    protected override async Task OnInitializedAsync()
+    {
+        hamsters = await Http.GetFromJsonAsync<Hamster[]?>("https://localhost:5001/hamsters");
+    }
+}

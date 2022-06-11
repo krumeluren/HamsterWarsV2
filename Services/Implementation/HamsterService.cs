@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
-using Contracts;
+using Domain.Entities.Exceptions;
+using Domain.Entities.Models;
+using Repo.Contracts;
 using Service.Contracts;
-using Shared.DataTransferObject;
+using Shared.DataTransferObject.Hamster;
 
 namespace Services.Implementation;
 
@@ -18,33 +20,76 @@ public class HamsterService : IHamsterService
         _mapper = mapper;
     }
 
-    public HamsterGetDto Create(HamsterPostDto entity, bool trackChanges)
+    public HamsterGetDto Create(HamsterPostDto entity, bool trackChanges) //TODO: trackchanges remove?
     {
-        throw new NotImplementedException();
+        var hamster = _mapper.Map<Hamster>(entity);
+        _repo.Hamster.CreateHamster(hamster);
+        _repo.Save();
+        return _mapper.Map<HamsterGetDto>(hamster);
     }
 
     public void Delete(int id, bool trackChanges)
     {
-        throw new NotImplementedException();
+        var hamster = _repo.Hamster.GetById(id, trackChanges);
+
+        if (hamster == null)
+        {
+            throw new HamsterNotFoundException(id);
+        }
+        _repo.Hamster.DeleteHamster(hamster);
+        _repo.Save();
     }
 
     public IEnumerable<HamsterGetDto> GetAll(bool trackChanges)
     {
-        throw new NotImplementedException();
+        var hamsters = _repo.Hamster.GetAll(trackChanges);
+        return _mapper.Map<IEnumerable<HamsterGetDto>>(hamsters);
     }
 
     public HamsterGetDto GetById(int id, bool trackChanges)
     {
-        throw new NotImplementedException();
+        var hamster = _repo.Hamster.GetById(id, trackChanges);
+        if (hamster == null)
+        {
+            throw new HamsterNotFoundException(id);
+        }
+        return _mapper.Map<HamsterGetDto>(hamster);
     }
 
     public HamsterGetDto GetRandom(bool trackChanges)
     {
-        throw new NotImplementedException();
+        var allHamsters = _repo.Hamster.GetAll(trackChanges);
+        if (allHamsters.Count() == 0)
+        {
+            throw new InvalidOperationException("No hamsters found");
+        }
+        var hamster = allHamsters.OrderBy(x => Guid.NewGuid()).FirstOrDefault();
+        return _mapper.Map<HamsterGetDto>(hamster);
     }
 
-    public HamsterGetDto Update(int id, HamsterPostDto entity, bool trackChanges)
+    public IEnumerable<HamsterGetDto> TopLosers(int count, bool trackChanges)
     {
-        throw new NotImplementedException();
+        var hamsters = _repo.Hamster.GetAll(trackChanges);
+        var topLosers = hamsters.OrderByDescending(x => x.Losses).Take(count);
+        return _mapper.Map<IEnumerable<HamsterGetDto>>(topLosers);
+    }
+
+    public IEnumerable<HamsterGetDto> TopWinners(int count, bool trackChanges)
+    {
+        var hamsters = _repo.Hamster.GetAll(trackChanges);
+        var topWinners = hamsters.OrderByDescending(x => x.Wins).Take(count);
+        return _mapper.Map<IEnumerable<HamsterGetDto>>(topWinners);
+    }
+
+    public HamsterGetDto Update(int id, HamsterPutDto entity, bool trackChanges)
+    {
+        var hamster = _repo.Hamster.GetById(id, trackChanges);
+        if (hamster == null)
+        {
+            throw new HamsterNotFoundException(id);
+        }
+        _mapper.Map(entity, hamster);
+        _repo.Save();
+        return _mapper.Map<HamsterGetDto>(hamster);
     }
 }

@@ -1,0 +1,30 @@
+﻿body {
+}
+
+.battlecard > table {
+    font-size: 0.85em;
+}
+
+dl {
+    font-size: 0.8em;
+}
+.battlecard {
+    width: 100%;
+    margin: auto;
+}
+
+    .battlecard > img {
+        width: 100%;
+        aspect-ratio: 1/1;
+        object-fit: cover;
+    }
+
+@media (max-width: 920px) {
+    .battlecard > table {
+        font-size: 0.7em;
+    }
+
+    dl {
+        font-size: 0.7em;
+    }
+}

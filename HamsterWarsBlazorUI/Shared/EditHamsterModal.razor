@@ -1,0 +1,82 @@
+﻿@using HamsterWarsBlazorUI.Models
+@using HamsterWarsBlazorUI.Pages
+@inject HttpClient Http;
+
+<button class="hamster-modal-open btn oi oi-magnifying-glass" @onclick="Show"></button>
+
+@if (ShowDialog)
+{
+    <div style="backdrop-filter: blur(10px) grayscale(1) " class="modal fade show d-inline-block " tabindex="-1" role="dialog" @onclick="Close">
+        <div class="modal-dialog" role="document" @onclick:stopPropagation="true">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="titleLabel">Edit Hamster</h5>
+                    <button type="button" class=" btn btn-danger close" @onclick="@Close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <HamsterCard hamster=@hamster></HamsterCard>
+                    @if (!confirm)
+                    {
+                        <button class="btn btn-danger" @onclick="Confirm">Delete</button>
+                    }
+                    else
+                    {
+                        <button class="btn btn-danger" @onclick="DeleteHamster">Are you sure?</button>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+
+    /// <summary>
+    /// The hamster to display in the modal
+    /// </summary>
+    [Parameter]
+    public Hamster hamster { get; set; }
+    /// <summary>
+    /// Bool to display the modal
+    /// </summary>
+    public bool ShowDialog { get; set; }
+    /// <summary>
+    /// Bool to confirm the deletion of the hamster
+    /// </summary>
+    public bool confirm { get; set; }
+    /// <summary>
+    /// Set confirm to true to show the delete button
+    /// </summary>
+    public void Confirm()
+    {
+        confirm = true;
+    }
+    /// <summary>
+    /// Show the modal
+    /// </summary>
+    public void Show()
+    {
+        ShowDialog = true;
+        StateHasChanged();
+    }
+    /// <summary>
+    /// Close the modal
+    /// </summary>
+    public void Close()
+    {
+        ShowDialog = false;
+    }
+    /// <summary>
+    /// Post the hamster to the server to delete it
+    /// </summary>
+    public async void DeleteHamster()
+    {
+        confirm = false;
+        await Http.DeleteAsync($"https://localhost:5001/hamsters/{hamster.Id}");
+        Close();
+        StateHasChanged();
+    }
+}

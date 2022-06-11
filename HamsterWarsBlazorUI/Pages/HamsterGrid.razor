@@ -1,0 +1,44 @@
+﻿@inject HttpClient Http
+@page "/hamstergrid"
+@using HamsterWarsBlazorUI.Models
+
+<div class="p-1 text-center bg-light">
+    <h1 class="p-2 px-3 text-uppercase text-primary">Gallery</h1>
+</div>
+
+<CreateHamsterModal></CreateHamsterModal>
+<div class="grid-wrap">
+    <div class="grid-container">
+        @if (hamsters != null && hamsters.Count() > 0)
+        {
+            @foreach (var hamster in hamsters)
+            {
+                <div class="card-container">
+                    <HamsterCard DisplayModalButton hamster="@hamster"></HamsterCard>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="card-container">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">No hamsters found</h5>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    /// <summary>
+    /// Hamsters to display in the grid
+    /// </summary>
+    private Hamster[]? hamsters;
+
+    protected override async Task OnInitializedAsync()
+    {
+        hamsters = await Http.GetFromJsonAsync<Hamster[]?>("https://localhost:5001/hamsters");
+    }
+}

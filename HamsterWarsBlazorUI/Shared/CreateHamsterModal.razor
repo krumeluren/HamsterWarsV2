@@ -1,0 +1,47 @@
+﻿@using HamsterWarsBlazorUI.Pages
+@using HamsterWarsBlazorUI.Shared;
+@using System.Net.Http.Json
+@inject HttpClient Http;
+
+<button class="btn btn-primary" @onclick="Show"> Create Hamster<span class="oi oi-fullscreen-enter"></span></button>
+@if (ShowDialog)
+{
+    <div style="backdrop-filter: blur(10px) grayscale(1) " class="modal fade show d-inline-block " tabindex="-1" role="dialog" @onclick="Close">
+        <div class="modal-dialog" role="document" @onclick:stopPropagation="true">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="titleLabel">Create Hamster Modal</h5>
+                    <button type="button" class=" btn btn-danger close" @onclick="@Close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <CreateHamsterForm onHandleSubmit="Close"></CreateHamsterForm>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@code {
+    /// <summary>
+    /// Bool to display the modal
+    /// </summary>
+    public bool ShowDialog { get; set; }
+
+    /// <summary>
+    /// Show the modal
+    /// </summary>
+    public void Show()
+    {
+        ShowDialog = true;
+        StateHasChanged();
+    }
+    /// <summary>
+    /// Close the modal
+    /// </summary>
+    public void Close()
+    {
+        ShowDialog = false;
+    }
+}
+

@@ -1,0 +1,10 @@
+﻿.hamster-modal-open {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: transparent;
+    font-size: 20px;
+    cursor: zoom-in;
+    color: white;
+    aspect-ratio: 1/1;
+}

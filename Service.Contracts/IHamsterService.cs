@@ -1,4 +1,5 @@
-﻿using Shared.DataTransferObject;
+﻿using Shared.DataTransferObject.Hamster;
+
 namespace Service.Contracts;
 public interface IHamsterService
 {
@@ -21,9 +22,18 @@ public interface IHamsterService
     /// <summary>
     /// Update a hamster in the database
     /// </summary>
-    HamsterGetDto Update(int id, HamsterPostDto entity, bool trackChanges);
+    HamsterGetDto Update(int id, HamsterPutDto entity, bool trackChanges);
     /// <summary>
     /// Delete a hamster from the database
     /// </summary>
     void Delete(int id, bool trackChanges);
+
+    /// <summary>
+    /// Get hamsters by most wins
+    /// </summary>
+    IEnumerable<HamsterGetDto> TopWinners(int count, bool trackChanges);
+    /// <summary>
+    /// Get hamsters by most losses
+    /// </summary>
+    IEnumerable<HamsterGetDto> TopLosers(int count, bool trackChanges);
 }

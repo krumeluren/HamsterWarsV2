@@ -11,10 +11,10 @@ internal class BattleConfig : IEntityTypeConfiguration<Battle>
     {
         builder.HasKey(e => e.Id);
         builder.HasData
-            (   
+            (
                 new Battle { Id = 1, LoserHamsterId = 1, WinnerHamsterId = 2 },
-                new Battle { Id = 2, LoserHamsterId = 3, WinnerHamsterId = 2},
-                new Battle { Id = 3, LoserHamsterId = 2, WinnerHamsterId = 4}
+                new Battle { Id = 2, LoserHamsterId = 3, WinnerHamsterId = 2 },
+                new Battle { Id = 3, LoserHamsterId = 2, WinnerHamsterId = 4 }
             );
     }
 }

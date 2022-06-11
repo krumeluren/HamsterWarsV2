@@ -1,0 +1,35 @@
+﻿@using HamsterWarsBlazorUI.Models
+@inject HttpClient Http
+
+@if (hamsters != null)
+{
+    <div class="p-1 text-center bg-light">
+        <h2 class="p-2 px-3 text-uppercase text-info">Battle Statistics</h2>
+    </div>
+    @if (hamsters.Length == 2)
+    {
+        <div class="grid-wrap">
+            <div class="grid-container">
+                @foreach (var hamster in hamsters)
+                {
+
+                    <div class="card-container">
+                        <HamsterCard DisplayGames hamster="@hamster"></HamsterCard>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+    else
+    {
+        <p><em>Too many or too few hamsters were loaded. Only 2 hamsters can be compared.</em></p>
+    }
+}
+
+@code {
+    /// <summary>
+    /// Array of 2 hamsters to compare.
+    /// </summary>
+    [Parameter]
+    public Hamster[]? hamsters { get; set; }
+}

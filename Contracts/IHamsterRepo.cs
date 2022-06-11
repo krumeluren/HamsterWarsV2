@@ -1,7 +1,6 @@
-﻿
-using Domain.Entities.Models;
+﻿using Domain.Entities.Models;
 
-namespace Contracts;
+namespace Repo.Contracts;
 public interface IHamsterRepo
 {
     /// <summary>
@@ -15,11 +14,11 @@ public interface IHamsterRepo
     /// <summary>
     /// Add a new hamster to the database
     /// </summary>
-    Hamster Create(Hamster hamster);
+    Hamster CreateHamster(Hamster hamster);
     /// <summary>
     /// Delete the hamster from the database
     /// </summary>
     /// <param name="hamster"></param>
-    void Delete(Hamster hamster);
-    
+    void DeleteHamster(Hamster hamster);
+
 }

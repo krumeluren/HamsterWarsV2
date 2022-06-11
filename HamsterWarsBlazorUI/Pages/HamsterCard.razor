@@ -1,0 +1,79 @@
+﻿@using HamsterWarsBlazorUI.Models
+
+<link href="../Pages/HamsterCard.razor.css" rel="stylesheet">
+
+<div class="card battlecard">
+
+    <img src="@string.Format($"data:image/png;base64,{hamster.ImgData}")" alt="...">
+
+    @if (DisplayModalButton)
+    {
+        <EditHamsterModal hamster=@hamster></EditHamsterModal>
+    }
+    
+    <h4 class="mb-3 text-uppercase text-secondary">@hamster.Name</h4>
+    <table class="table">
+        <tbody style="padding: 0;">
+            <tr>
+                <th class="text-center" scope="row">Favourite Food</th>
+
+                <td class="text-start">@hamster.FavFood</td>
+            </tr>
+            <tr>
+                <th class="text-center" scope="row">Age</th>
+
+                <td class="text-start">@hamster.Age</td>
+            </tr>
+            @if (DisplayGames)
+            {
+                <tr>
+                    <th class="text-center" scope="row">Games</th>
+
+                    <td class="text-start">@hamster.Games</td>
+                </tr>
+                <tr>
+                    <th class="text-center" scope="row">Wins</th>
+
+                    <td class="text-start">@hamster.Wins</td>
+                </tr>
+                <tr>
+                    <th class="text-center" scope="row">Losses</th>
+
+                    <td class="text-start">@hamster.Losses</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <dl>
+        <dt class="text-center">Loves</dt>
+        <dd>@hamster.Loves</dd>
+    </dl>
+</div>
+
+@code {
+    /// <summary>
+    /// The hamster to be displayed in the card.
+    /// </summary>
+    [Parameter]
+    public Hamster hamster { get; set; }
+
+    /// <summary>
+    /// Whether to display games/wins/losses
+    /// </summary>
+    [Parameter]
+    public bool DisplayGames { get; set; }
+
+    /// <summary>
+    /// Whether to display the button for opening the edit modal
+    /// </summary>
+    [Parameter]
+    public bool DisplayModalButton { get; set; }
+
+    /// <summary>
+    /// Whether the parameter imgBase64 will be used to display the image
+    /// </summary>
+    [Parameter]
+    public bool IsPreview { get; set; }
+
+
+}

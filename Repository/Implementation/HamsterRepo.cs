@@ -1,5 +1,6 @@
-﻿using Contracts;
-using Domain.Entities.Models;
+﻿using Domain.Entities.Models;
+using Microsoft.EntityFrameworkCore;
+using Repo.Contracts;
 
 namespace Repository.Implementation;
 
@@ -9,23 +10,27 @@ public class HamsterRepo : RepoBase<Hamster>, IHamsterRepo
     {
     }
 
-    public Hamster Create(Hamster hamster)
+    public Hamster CreateHamster(Hamster hamster)
     {
-        throw new NotImplementedException();
+        Create(hamster);
+        return hamster;
     }
 
-    public void Delete(Hamster hamster)
+    public void DeleteHamster(Hamster hamster)
     {
-        throw new NotImplementedException();
+        Delete(hamster);
     }
 
     public IEnumerable<Hamster> GetAll(bool trackChanges)
     {
-        throw new NotImplementedException();
+        return FindAll(trackChanges).ToList();
     }
 
     public Hamster GetById(int id, bool trackChanges)
     {
-        throw new NotImplementedException();
+        return FindByCondition(h => h.Id.Equals(id), trackChanges)
+            .Include(e => e.BattlesLost)
+            .Include(e => e.BattlesWon)
+            .SingleOrDefault();
     }
 }

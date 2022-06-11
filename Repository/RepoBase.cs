@@ -1,5 +1,5 @@
-﻿using Contracts;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Repo.Contracts;
 using System.Linq.Expressions;
 
 namespace Repository;
@@ -26,7 +26,7 @@ public abstract class RepoBase<T> : IRepoBase<T> where T : class
     public IQueryable<T> FindAll(bool trackChanges)
     {
         return !trackChanges ?
-            _context.Set<T>().AsNoTracking() 
+            _context.Set<T>().AsNoTracking()
             :
             _context.Set<T>();
     }
@@ -34,7 +34,7 @@ public abstract class RepoBase<T> : IRepoBase<T> where T : class
     public IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression, bool trackChanges)
     {
         return !trackChanges ?
-            _context.Set<T>().Where(expression).AsNoTracking() 
+            _context.Set<T>().Where(expression).AsNoTracking()
             :
             _context.Set<T>().Where(expression);
     }

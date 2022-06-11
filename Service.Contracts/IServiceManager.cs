@@ -2,8 +2,7 @@
 namespace Service.Contracts;
 public interface IServiceManager
 {
-    ICompanyService CompanyService { get; }
-    IEmployeeService EmployeeService { get; }
     IHamsterService HamsterService { get; }
     IBattleService BattleService { get; }
+    FileHandler ImageHandler { get; }
 }

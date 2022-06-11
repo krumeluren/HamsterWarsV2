@@ -1,5 +1,4 @@
-﻿
-namespace Shared.DataTransferObject;
+﻿namespace Shared.DataTransferObject.Battle;
 
 public record BattleGetDto
 {

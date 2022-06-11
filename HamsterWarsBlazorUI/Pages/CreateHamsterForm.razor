@@ -1,0 +1,103 @@
+﻿@using System.IO;
+@using HamsterWarsBlazorUI.Shared
+@using HamsterWarsBlazorUI.Models
+@inject HttpClient Http;
+@page "/create"
+
+<div class="container" style="background-color: lightcyan;">
+    <h3>Create Hamster</h3>
+
+    <form>
+        <EditForm id="submithamster" Model="hamster" OnSubmit="HandleSubmit">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            <div class="form-group">
+                <label>Name</label>
+                <input class="form-control" placeholder="Cupcake" maxlength="15" @bind-Value="hamster.Name" @bind-Value:event="oninput"></input>
+            </div>
+            <div class="form-group">
+                <label>Age</label>
+                <input class="form-control" max="1000" min="0" type="number" @bind-Value="hamster.Age" @bind-Value:event="oninput"></input>
+            </div>
+            <div class="form-group">
+                <label>Favourite Food</label>
+                <input class="form-control" placeholder="Carrots" maxlength="30" @bind-Value="hamster.FavFood" @bind-Value:event="oninput"></input>
+            </div>
+            <div class="form-group">
+                <label>Loves</label>
+                <input class="form-control" placeholder="Running in the wheel" maxlength="100" @bind-Value="hamster.Loves" @bind-Value:event="oninput"></input>
+            </div>
+            <div class="form-group">
+                <label>Image</label>
+                <InputFile class="form-control" OnChange=@OnInputFileChanged></InputFile>
+            </div>
+            @{
+                //Show submit button after something is filled. Or else its possible to click submit before the form has been interacted with.
+                if ((hamster.Name ?? hamster.FavFood ?? hamster.Loves) != null)
+                {
+                    <button type="submit" class="btn btn-primary" disabled=@(!context.Validate())>Submit</button>
+                }
+                else
+                {
+                    <button type="submit" class="btn btn-secondary" disabled="disabled">Submit</button>
+                }
+            }
+        </EditForm>
+    </form>
+
+    <div class="p-1 text-center ">
+        <h5 class="p-2 px-3 text-uppercase text-warning">Preview</h5>
+    </div>
+
+    <div class="preview-container">
+        <HamsterCard hamster="new Hamster{
+            ImgName=hamster.ImgName,
+            ImgData = hamster.ImgData,
+            Name=hamster.Name, Age = hamster.Age,
+            FavFood = hamster.FavFood,
+            Loves = hamster.Loves,}"></HamsterCard>
+    </div>
+</div>
+
+@code {
+    /// <summary>
+    /// The model for the hamster form being filled
+    /// </summary>
+    public HamsterForm hamster { get; set; } = new HamsterForm();
+
+    /// <summary>
+    /// Callback for when the form is submitted (Close parent modal component)
+    /// </summary>
+    [Parameter]
+    public EventCallback onHandleSubmit { get; set; }
+
+    /// <summary>
+    /// Submit the form to the server controller
+    /// </summary>
+    public async void HandleSubmit()
+    {
+        Console.WriteLine("Submitted");
+        //Send HamsterForm to server
+        await Http.PostAsJsonAsync("https://localhost:5001/hamsters", hamster);
+        hamster = new HamsterForm();
+        await onHandleSubmit.InvokeAsync();
+        StateHasChanged();
+    }
+
+    /// <summary>
+    /// Handle the image file to be uploaded
+    /// </summary>
+    /// <param name="input"></param>
+    /// <returns></returns>
+    private async Task OnInputFileChanged(InputFileChangeEventArgs input)
+    {
+        var file = input.File;
+
+        var buffer = new byte[file.Size];
+        await file.OpenReadStream().ReadAsync(buffer);
+
+        hamster.ImgData = Convert.ToBase64String(buffer);
+        hamster.ImgName = file.Name;
+        StateHasChanged();
+    }
+}

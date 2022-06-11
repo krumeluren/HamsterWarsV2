@@ -1,0 +1,10 @@
+﻿.preview-container {
+    width: 50%;
+    margin: auto;
+}
+
+@media (max-width: 575px){
+    .preview-container {
+        width: 100%;
+    }
+}

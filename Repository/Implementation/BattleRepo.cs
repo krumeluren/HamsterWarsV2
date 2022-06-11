@@ -1,18 +1,31 @@
-﻿using Contracts;
-using Domain.Entities.Models;
+﻿using Domain.Entities.Models;
+using Repo.Contracts;
+
 namespace Repository.Implementation;
-public class BattleRepo : RepoBase<Battle>,  IBattleRepo
+public class BattleRepo : RepoBase<Battle>, IBattleRepo
 {
     public BattleRepo(RepoContext repoContext) : base(repoContext)
     {
     }
+
+    public Battle CreateBattle(Battle battle)
+    {
+        Create(battle);
+        return battle;
+    }
+
+    public void DeleteBattle(Battle battle)
+    {
+        Delete(battle);
+    }
+
     public IEnumerable<Battle> GetAll(bool trackChanges)
     {
-        throw new NotImplementedException();
+        return FindAll(trackChanges).ToList();
     }
 
     public Battle GetById(int id, bool trackChanges)
     {
-        throw new NotImplementedException();
+        return FindByCondition(b => b.Id.Equals(id), trackChanges).SingleOrDefault();
     }
 }
