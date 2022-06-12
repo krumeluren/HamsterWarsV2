@@ -1,4 +1,4 @@
-﻿namespace Repo.Contracts;
+﻿namespace Core.Contracts.Repo.Contracts;
 public interface ILoggerManager
 {
     void LogInfo(string message);

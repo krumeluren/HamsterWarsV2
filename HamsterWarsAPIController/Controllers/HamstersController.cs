@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Service.Contracts;
-using Shared.DataTransferObject.Hamster;
+using Core.Contracts.Service.Contracts;
+using Core.Shared.DataTransferObject.Hamster;
 
-namespace HamsterWarsAPIController.Controllers;
+namespace Presentation.HamsterWarsAPIController.Controllers;
 
 [Route("/hamsters")]
 [ApiController]

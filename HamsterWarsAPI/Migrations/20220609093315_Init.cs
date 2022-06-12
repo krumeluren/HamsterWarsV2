@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace HamsterWarsAPI.Migrations
+namespace Presentation.HamsterWarsAPI.Migrations
 {
     public partial class Init : Migration
     {

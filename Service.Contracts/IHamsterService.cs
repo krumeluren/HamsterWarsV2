@@ -1,6 +1,6 @@
-﻿using Shared.DataTransferObject.Hamster;
+﻿using Core.Shared.DataTransferObject.Hamster;
 
-namespace Service.Contracts;
+namespace Core.Contracts.Service.Contracts;
 public interface IHamsterService
 {
     /// <summary>

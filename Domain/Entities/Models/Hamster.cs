@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
-namespace Domain.Entities.Models;
+namespace Core.Domain.Entities.Models;
 public class Hamster
 {
     public int Id { get; set; }

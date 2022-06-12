@@ -1,4 +1,4 @@
-﻿namespace HamsterWarsBlazorUI.Models;
+﻿namespace Presentation.HamsterWarsBlazorUI.Models;
 public class Hamster
 {
     public int Id { get; set; }

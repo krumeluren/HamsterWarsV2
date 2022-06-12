@@ -1,6 +1,6 @@
 ﻿
 
-namespace Domain.Entities.Exceptions;
+namespace Core.Domain.Entities.Exceptions;
 
 public class CollectionByIdsBadRequestException : BadRequestException
 {

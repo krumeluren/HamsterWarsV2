@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Repo.Contracts;
+using Core.Contracts.Repo.Contracts;
 using System.Linq.Expressions;
 
-namespace Repository;
+namespace Infrastructure.Repository;
 public abstract class RepoBase<T> : IRepoBase<T> where T : class
 {
 

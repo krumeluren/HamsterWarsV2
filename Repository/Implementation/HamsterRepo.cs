@@ -1,8 +1,8 @@
-﻿using Domain.Entities.Models;
+﻿using Core.Contracts.Repo.Contracts;
+using Core.Domain.Entities.Models;
 using Microsoft.EntityFrameworkCore;
-using Repo.Contracts;
 
-namespace Repository.Implementation;
+namespace Infrastructure.Repository.Implementation;
 
 public class HamsterRepo : RepoBase<Hamster>, IHamsterRepo
 {

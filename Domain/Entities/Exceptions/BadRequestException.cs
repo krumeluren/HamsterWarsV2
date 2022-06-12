@@ -1,4 +1,4 @@
-﻿namespace Domain.Entities.Exceptions;
+﻿namespace Core.Domain.Entities.Exceptions;
 
 public abstract class BadRequestException : Exception
 {

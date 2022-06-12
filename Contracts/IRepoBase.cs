@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace Repo.Contracts;
+namespace Core.Contracts.Repo.Contracts;
 public interface IRepoBase<T>
 {
     IQueryable<T> FindAll(bool trackChanges);

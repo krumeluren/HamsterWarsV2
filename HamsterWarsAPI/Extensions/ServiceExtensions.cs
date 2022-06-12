@@ -1,14 +1,13 @@
-﻿
+﻿using Core.Contracts.Repo.Contracts;
+using Core.Contracts.Service.Contracts;
+using Core.Shared.DataTransferObject.Battle;
+using Core.Shared.DataTransferObject.Hamster;
+using Infrastructure.Repository;
 using LoggerService;
 using Microsoft.EntityFrameworkCore;
-using Repo.Contracts;
-using Repository;
-using Service.Contracts;
 using Services;
-using Shared.DataTransferObject.Battle;
-using Shared.DataTransferObject.Hamster;
 
-namespace HamsterWarsAPI.Extensions;
+namespace Presentation.HamsterWarsAPI.Extensions;
 public static class ServiceExtensions
 {
     public static void ConfigureCors(this IServiceCollection services)

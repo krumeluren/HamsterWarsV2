@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Infrastructure.Repository;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-using Repository;
 
-namespace HamsterWarsAPI.ContextFactory;
+
+namespace Presentation.HamsterWarsAPI.ContextFactory;
 
 public class RepositoryContextFactory : IDesignTimeDbContextFactory<RepoContext>
 {

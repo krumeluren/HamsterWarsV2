@@ -1,6 +1,8 @@
-﻿using Service.Contracts;
+﻿
+using Core.Contracts.Service.Contracts;
+
 namespace Services.Implementation;
-public class ImageHandler : FileHandler
+public class ImageHandler : IFileHandler
 {
     public string FilePath()
     {

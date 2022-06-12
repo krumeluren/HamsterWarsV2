@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using Domain.Entities.Exceptions;
-using Domain.Entities.Models;
-using Repo.Contracts;
-using Service.Contracts;
-using Shared.DataTransferObject.Hamster;
+using Core.Contracts.Repo.Contracts;
+using Core.Contracts.Service.Contracts;
+using Core.Domain.Entities.Exceptions;
+using Core.Domain.Entities.Models;
+using Core.Shared.DataTransferObject.Hamster;
 
 namespace Services.Implementation;
 

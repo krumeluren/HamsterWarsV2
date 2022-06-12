@@ -1,6 +1,6 @@
-﻿namespace HamsterWarsAPIController;
+﻿namespace Presentation.HamsterWarsAPIController;
 
-public class AssemblyReference
+public static class AssemblyReference
 {
 
 }

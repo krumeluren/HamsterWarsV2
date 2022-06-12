@@ -1,6 +1,6 @@
-﻿using Domain.Entities.Models;
+﻿using Core.Domain.Entities.Models;
 
-namespace Repo.Contracts;
+namespace Core.Contracts.Repo.Contracts;
 public interface IHamsterRepo
 {
     /// <summary>

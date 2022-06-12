@@ -1,8 +1,8 @@
-﻿using Domain.Entities.Models;
+﻿using Core.Domain.Entities.Models;
 using Microsoft.EntityFrameworkCore;
-using Repository.Configuration;
+using Infrastructure.Repository.Configuration;
 
-namespace Repository;
+namespace Infrastructure.Repository;
 public class RepoContext : DbContext
 {
     public RepoContext(DbContextOptions options) : base(options) { }

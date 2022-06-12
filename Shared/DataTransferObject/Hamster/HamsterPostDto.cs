@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Shared.DataTransferObject.Hamster;
+namespace Core.Shared.DataTransferObject.Hamster;
 public record HamsterPostDto
 {
     [MaxLength(20, ErrorMessage = "Property 'Name' must be between 4 and 20 characters long")]

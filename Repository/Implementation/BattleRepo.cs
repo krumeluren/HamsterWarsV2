@@ -1,7 +1,7 @@
-﻿using Domain.Entities.Models;
-using Repo.Contracts;
+﻿using Core.Domain.Entities.Models;
+using Core.Contracts.Repo.Contracts;
 
-namespace Repository.Implementation;
+namespace Infrastructure.Repository.Implementation;
 public class BattleRepo : RepoBase<Battle>, IBattleRepo
 {
     public BattleRepo(RepoContext repoContext) : base(repoContext)

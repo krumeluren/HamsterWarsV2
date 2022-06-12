@@ -1,5 +1,5 @@
-﻿using NLog;
-using Repo.Contracts;
+﻿using Core.Contracts.Repo.Contracts;
+using NLog;
 
 namespace LoggerService;
 public class LoggerManager : ILoggerManager

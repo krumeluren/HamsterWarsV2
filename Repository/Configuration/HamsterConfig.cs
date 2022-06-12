@@ -1,9 +1,9 @@
 ﻿
-using Domain.Entities.Models;
+using Core.Domain.Entities.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Repository.Configuration;
+namespace Infrastructure.Repository.Configuration;
 
 internal class HamsterConfig : IEntityTypeConfiguration<Hamster>
 {

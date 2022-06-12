@@ -1,4 +1,4 @@
-﻿namespace Repo.Contracts;
+﻿namespace Core.Contracts.Repo.Contracts;
 public interface IRepoManager
 {
     public IHamsterRepo Hamster { get; }

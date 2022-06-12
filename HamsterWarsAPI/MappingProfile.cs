@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
-using Domain.Entities.Models;
-using Shared.DataTransferObject.Battle;
-using Shared.DataTransferObject.Hamster;
+using Core.Domain.Entities.Models;
+using Core.Shared.DataTransferObject.Battle;
+using Core.Shared.DataTransferObject.Hamster;
 
-namespace HamsterWarsAPI;
+
+namespace Presentation.HamsterWarsAPI;
 public class MappingProfile : Profile
 {
     public MappingProfile()

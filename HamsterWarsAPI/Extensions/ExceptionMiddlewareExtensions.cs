@@ -1,10 +1,11 @@
-﻿using Domain.Entities.ErrorModel;
-using Domain.Entities.Exceptions;
+﻿using Core.Contracts.Repo.Contracts;
+using Core.Domain.Entities.ErrorModel;
+using Core.Domain.Entities.Exceptions;
 using Microsoft.AspNetCore.Diagnostics;
-using Repo.Contracts;
+
 using System.Net;
 
-namespace HamsterWarsAPI.Extensions;
+namespace Presentation.HamsterWarsAPI.Extensions;
 public static class ExceptionMiddlewareExtensions
 {
     public static void ConfigureExceptionHandler(this WebApplication app, ILoggerManager logger)

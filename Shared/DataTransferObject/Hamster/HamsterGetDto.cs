@@ -1,4 +1,4 @@
-﻿namespace Shared.DataTransferObject.Hamster;
+﻿namespace Core.Shared.DataTransferObject.Hamster;
 public record HamsterGetDto
 {
     public int Id { get; set; }

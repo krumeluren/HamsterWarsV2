@@ -1,6 +1,6 @@
-﻿using Shared.DataTransferObject.Battle;
+﻿using Core.Shared.DataTransferObject.Battle;
 
-namespace Service.Contracts;
+namespace Core.Contracts.Service.Contracts;
 public interface IBattleService
 {
     IEnumerable<BattleGetDto> GetAll(bool trackChanges);

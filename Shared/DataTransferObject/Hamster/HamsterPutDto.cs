@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Shared.DataTransferObject.Hamster;
+namespace Core.Shared.DataTransferObject.Hamster;
 
 public record HamsterPutDto
 {

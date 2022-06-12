@@ -1,7 +1,7 @@
-﻿using Repo.Contracts;
-using Repository.Implementation;
+﻿using Core.Contracts.Repo.Contracts;
+using Infrastructure.Repository.Implementation;
 
-namespace Repository;
+namespace Infrastructure.Repository;
 
 public class RepoManager : IRepoManager
 {

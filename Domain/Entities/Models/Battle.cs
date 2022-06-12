@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Domain.Entities.Models;
+namespace Core.Domain.Entities.Models;
 public class Battle
 {
     public int Id { get; set; }

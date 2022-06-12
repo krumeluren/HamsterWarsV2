@@ -1,9 +1,9 @@
 ﻿
 using Microsoft.AspNetCore.Mvc;
-using Service.Contracts;
-using Shared.DataTransferObject.Battle;
+using Core.Contracts.Service.Contracts;
+using Core.Shared.DataTransferObject.Battle;
 
-namespace HamsterWarsAPIController.Controllers;
+namespace Presentation.HamsterWarsAPIController.Controllers;
 
 [Route("/matches")]
 [ApiController]

@@ -2,7 +2,7 @@
 using Microsoft.Net.Http.Headers;
 using System.Text;
 
-namespace HamsterWarsAPI;
+namespace Presentation.HamsterWarsAPI;
 public class CsvOutputFormatter<T> : TextOutputFormatter
 {
     public CsvOutputFormatter()

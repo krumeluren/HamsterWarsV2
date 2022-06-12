@@ -1,5 +1,5 @@
-﻿namespace Service.Contracts;
-public interface FileHandler
+﻿namespace Core.Contracts.Service.Contracts;
+public interface IFileHandler
 {
     /// <summary>
     /// Upload file

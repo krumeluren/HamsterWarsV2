@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 
-namespace Domain.Entities.ErrorModel;
+namespace Core.Domain.Entities.ErrorModel;
 public class ErrorDetails
 {
     public int StatusCode { get; set; }

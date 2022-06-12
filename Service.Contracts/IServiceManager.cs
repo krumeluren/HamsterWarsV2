@@ -1,8 +1,8 @@
 ﻿
-namespace Service.Contracts;
+namespace Core.Contracts.Service.Contracts;
 public interface IServiceManager
 {
     IHamsterService HamsterService { get; }
     IBattleService BattleService { get; }
-    FileHandler ImageHandler { get; }
+    IFileHandler ImageHandler { get; }
 }
