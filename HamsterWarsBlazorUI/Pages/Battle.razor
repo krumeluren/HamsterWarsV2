@@ -44,28 +44,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        hamsters = null;
-        var hamster1 = await Http.GetFromJsonAsync<Hamster>("/api/hamsters/random");
-        var hamster2 = await Http.GetFromJsonAsync<Hamster>("/api/hamsters/random");
-
-        //Retry 3 times
-        for (int i = 0; i < 3; i++)
-        {
-            if (hamster1 == null || hamster2 == null || hamster1.Id == hamster2.Id)
-            {
-                hamster1 = await Http.GetFromJsonAsync<Hamster>("/api/hamsters/random");
-                hamster2 = await Http.GetFromJsonAsync<Hamster>("/api/hamsters/random");
-            }
-            else
-            {
-                break;
-            }
-        }
-        if (hamster1 == null || hamster2 == null || hamster1.Id == hamster2.Id)
-        {
-            throw new InvalidOperationException("Could not find two different hamsters to battle");
-        }       
-        hamsters = new Hamster[] { hamster1, hamster2 };
+        CreateBattle();
     }
 
     private void UserVote(Hamster votedfor)
@@ -75,33 +54,56 @@
             Console.WriteLine("hamsters is null");
             return;
         }
-        //Find loser
         Hamster loser = hamsters.Where(h => h != votedfor).First();
-        Vote(votedfor, loser);
+        Vote(votedfor.Id, loser.Id);
     }
 
     /// <summary>
-    /// Post the winner and loser to the server 
+    /// Post a new battle to the server
     /// </summary>
-    /// <param name="winner"></param>
-    /// <param name="loser"></param>
-    private async void Vote(Hamster winner, Hamster loser)
+    private void Vote(int winnerId, int loserId)
     {
-        var result = new List<Hamster>();
-        result.Add(winner);
-        result.Add(loser);
-        Console.WriteLine("Vote submitted");
-        await Http.PostAsJsonAsync("api/hamster/battleresult", result);
-        Update();
+        Http.PostAsJsonAsync("/matches", new { WinnerHamsterId = winnerId, LoserHamsterId = loserId });
+        BattleResult(winnerId, loserId);
+        CreateBattle();
+    }
+    /// <summary>
+    /// Get the previous hamsters from the server
+    /// </summary>
+    private async void BattleResult(int winnerId, int loserId)
+    {
+        var hamster1 = await Http.GetFromJsonAsync<Hamster>($"/hamsters/{winnerId}");
+        var hamster2 = await Http.GetFromJsonAsync<Hamster>($"/hamsters/{loserId}");
+        previousHamsters = new Hamster[] { hamster1, hamster2 };
+        StateHasChanged();
     }
 
     /// <summary>
     /// Create a new battle
     /// </summary>
-    private async void Update()
+    private async void CreateBattle()
     {
-        previousHamsters = hamsters;
-        hamsters = await Http.GetFromJsonAsync<Hamster[]?>("api/hamster/random");
+        Hamster? hamster11 = null;
+        Hamster? hamster22 = null;
+
+        //Retry 3 times
+        for (int i = 0; i < 3; i++)
+        {
+            if (hamster11 == null || hamster22 == null || hamster11.Id == hamster22.Id)
+            {
+                hamster11 = await Http.GetFromJsonAsync<Hamster>("/hamsters/random");
+                hamster22 = await Http.GetFromJsonAsync<Hamster>("/hamsters/random");
+            }
+            else
+            {
+                break;
+            }
+        }
+        if (hamster11 == null || hamster22 == null || hamster11.Id == hamster22.Id)
+        {
+            throw new InvalidOperationException("Could not find two different hamsters to battle");
+        }
+        hamsters = new Hamster[] { hamster11, hamster22 };
         StateHasChanged();
     }
 

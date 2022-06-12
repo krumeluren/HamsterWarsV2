@@ -87,7 +87,7 @@ public class HamsterService : IHamsterService
         if (hamster == null)
         {
             throw new HamsterNotFoundException(id);
-        }
+        }       
         _mapper.Map(entity, hamster);
         _repo.Save();
         return _mapper.Map<HamsterGetDto>(hamster);

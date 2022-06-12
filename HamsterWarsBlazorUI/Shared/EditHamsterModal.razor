@@ -75,7 +75,7 @@
     public async void DeleteHamster()
     {
         confirm = false;
-        await Http.DeleteAsync($"https://localhost:5001/hamsters/{hamster.Id}");
+        await Http.DeleteAsync($"/hamsters/{hamster.Id}");
         Close();
         StateHasChanged();
     }

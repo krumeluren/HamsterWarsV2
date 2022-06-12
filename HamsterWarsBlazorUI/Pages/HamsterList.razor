@@ -65,6 +65,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-        hamsters = await Http.GetFromJsonAsync<Hamster[]?>("https://localhost:5001/hamsters");
+        hamsters = await Http.GetFromJsonAsync<Hamster[]?>("/hamsters");
     }
 }

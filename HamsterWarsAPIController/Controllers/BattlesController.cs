@@ -41,7 +41,7 @@ public class BattlesController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        var createdBattle = _service.BattleService.Create(battle, trackChanges: false);
+        var createdBattle = _service.BattleService.Create(battle, trackChanges: true);
 
         return Ok(new { id = createdBattle.Id });
     }
@@ -56,7 +56,7 @@ public class BattlesController : ControllerBase
     [HttpGet("/matchWinners/{id}")]
     public IActionResult GetAllByWinnerHamsterId(int id) //TODO: testing
     {
-        var battles = Ok(_service.BattleService.GetAllByWinnerHamsterId(id, trackChanges: false));
+        var battles = _service.BattleService.GetAllByWinnerHamsterId(id, trackChanges: false);
         return Ok(battles);
     }
 }

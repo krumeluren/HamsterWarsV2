@@ -5,7 +5,7 @@ using Infrastructure.Repository;
 
 #nullable disable
 
-namespace Presentation.HamsterWarsAPI.Migrations
+namespace Presentation.HamsterWars.Migrations
 {
     [DbContext(typeof(RepoContext))]
     partial class RepoContextModelSnapshot : ModelSnapshot

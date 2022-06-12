@@ -7,13 +7,14 @@ public class ImageHandler : IFileHandler
     public string FilePath()
     {
         var currentDir = Directory.GetCurrentDirectory();
-        var wwwroot = currentDir + "\\wwwroot\\images\\hamsters";
-        return wwwroot;
+        var hamsterFolder = currentDir + "\\wwwroot\\images\\hamsters";
+        return hamsterFolder;
     }
 
     public string? GetFile(string fileName)
     {
         var path = FilePath() + "\\" + fileName;
+        
         if (File.Exists(path))
         {
             var image = File.ReadAllBytes(path);

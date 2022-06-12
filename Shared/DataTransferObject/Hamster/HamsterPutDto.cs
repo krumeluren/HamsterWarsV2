@@ -20,7 +20,7 @@ public record HamsterPutDto
     [MaxLength(100, ErrorMessage = "Property 'ImgName' cannot be longer than 100 characters")]
     public string? ImgName { get; set; }
 
-    public int Wins { get; set; }
-    public int Losses { get; set; }
-    public int Games { get; set; }
+    public int? Wins { get; set; }
+    public int? Losses { get; set; }
+    public int? Games { get; set; }
 }

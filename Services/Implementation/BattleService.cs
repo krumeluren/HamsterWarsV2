@@ -22,6 +22,13 @@ public class BattleService : IBattleService
     public BattleGetDto Create(BattlePostDto battle, bool trackChanges)
     {
         var battleEntity = _mapper.Map<Battle>(battle);
+        var winner = _repo.Hamster.GetById(battle.WinnerHamsterId, trackChanges);
+        var loser = _repo.Hamster.GetById(battle.LoserHamsterId, trackChanges);
+        winner.Games += 1;
+        loser.Games += 1;
+        winner.Wins += 1;
+        loser.Losses += 1;
+
         _repo.Battle.CreateBattle(battleEntity);
         _repo.Save();
         return _mapper.Map<BattleGetDto>(battleEntity);

@@ -12,8 +12,9 @@ public class MappingProfile : Profile
         CreateMap<Hamster, HamsterGetDto>();
         CreateMap<HamsterPostDto, Hamster>();
         CreateMap<HamsterPostDto, Hamster>().ReverseMap();
-        CreateMap<HamsterPutDto, Hamster>();
-        CreateMap<HamsterPutDto, Hamster>().ReverseMap();
+
+        CreateMap<HamsterPutDto, Hamster>()
+            .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null));
 
         CreateMap<Battle, BattleGetDto>();
         CreateMap<BattlePostDto, Battle>();

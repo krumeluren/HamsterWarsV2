@@ -77,7 +77,7 @@
     {
         Console.WriteLine("Submitted");
         //Send HamsterForm to server
-        await Http.PostAsJsonAsync("https://localhost:5001/hamsters", hamster);
+        await Http.PostAsJsonAsync("/hamsters", hamster);
         hamster = new HamsterForm();
         await onHandleSubmit.InvokeAsync();
         StateHasChanged();

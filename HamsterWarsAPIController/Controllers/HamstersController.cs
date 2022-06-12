@@ -30,6 +30,7 @@ public class HamstersController : ControllerBase
     public IActionResult GetRandom()
     {
         var hamster = _service.HamsterService.GetRandom(trackChanges: false);
+        hamster.ImgData = _service.ImageHandler.GetFile(hamster.ImgName);
         return Ok(hamster);
     }
 
@@ -41,6 +42,7 @@ public class HamstersController : ControllerBase
         {
             return NotFound();
         }
+        hamster.ImgData = _service.ImageHandler.GetFile(hamster.ImgName);
         return Ok(hamster);
     }
 
@@ -85,12 +87,22 @@ public class HamstersController : ControllerBase
     [HttpGet("/winners")]
     public IActionResult GetWinners() //TODO: testing
     {
-        return Ok(_service.HamsterService.TopWinners(5, trackChanges: false));
+        var hamsters = _service.HamsterService.TopWinners(5, trackChanges: false);
+        foreach (var hamster in hamsters)
+        {
+            hamster.ImgData = _service.ImageHandler.GetFile(hamster.ImgName);
+        }
+        return Ok(hamsters);
     }
 
     [HttpGet("/losers")]
     public IActionResult GetLosers() //TODO: testing
     {
-        return Ok(_service.HamsterService.TopLosers(5, trackChanges: false));
+        var hamsters =  _service.HamsterService.TopLosers(5, trackChanges: false);
+        foreach (var hamster in hamsters)
+        {
+            hamster.ImgData = _service.ImageHandler.GetFile(hamster.ImgName);
+        }
+        return Ok(hamsters);
     }
 }
