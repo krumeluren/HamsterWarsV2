@@ -17,7 +17,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\images\hamsters\" />
+    <Folder Include="internal_logs\" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -6,7 +6,7 @@
     <h1 class="p-2 px-3 text-uppercase text-primary">Gallery</h1>
 </div>
 
-<CreateHamsterModal></CreateHamsterModal>
+<CreateHamsterModal onClose="OnInitializedAsync"></CreateHamsterModal>
 <div class="grid-wrap">
     <div class="grid-container">
         @if (hamsters != null && hamsters.Count() > 0)
@@ -14,7 +14,7 @@
             @foreach (var hamster in hamsters)
             {
                 <div class="card-container">
-                    <HamsterCard DisplayModalButton hamster="@hamster"></HamsterCard>
+                    <HamsterCard onDeleted="OnInitializedAsync" DisplayModalButton hamster="@hamster"></HamsterCard>
                 </div>
             }
         }

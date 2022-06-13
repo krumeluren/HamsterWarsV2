@@ -31,7 +31,6 @@
                 <InputFile class="form-control" OnChange=@OnInputFileChanged></InputFile>
             </div>
             @{
-                //Show submit button after something is filled. Or else its possible to click submit before the form has been interacted with.
                 if ((hamster.Name ?? hamster.FavFood ?? hamster.Loves) != null)
                 {
                     <button type="submit" class="btn btn-primary" disabled=@(!context.Validate())>Submit</button>
@@ -65,7 +64,7 @@
     public HamsterForm hamster { get; set; } = new HamsterForm();
 
     /// <summary>
-    /// Callback for when the form is submitted (Close parent modal component)
+    /// Callback to parent when this form is submitted
     /// </summary>
     [Parameter]
     public EventCallback onHandleSubmit { get; set; }

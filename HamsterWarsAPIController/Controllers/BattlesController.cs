@@ -1,10 +1,8 @@
-﻿
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Core.Contracts.Service.Contracts;
 using Core.Shared.DataTransferObject.Battle;
 
 namespace Presentation.HamsterWarsAPIController.Controllers;
-
 [Route("/matches")]
 [ApiController]
 public class BattlesController : ControllerBase
@@ -17,19 +15,19 @@ public class BattlesController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult GetAll() //TODO: testing
+    public IActionResult GetAll()
     {
         return Ok(_service.BattleService.GetAll(trackChanges: false));
     }
 
     [HttpGet("{id}")]
-    public IActionResult GetById(int id) //TODO: testing
+    public IActionResult GetById(int id)
     {
         return Ok(_service.BattleService.GetById(id, trackChanges: false));
     }
 
     [HttpPost]
-    public IActionResult Create([FromBody] BattlePostDto battle) //TODO: testing
+    public IActionResult Create([FromBody] BattlePostDto battle)
     {
         if (battle == null)
         {
@@ -47,16 +45,20 @@ public class BattlesController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id) //TODO: testing
+    public IActionResult Delete(int id)
     {
         _service.BattleService.Delete(id, trackChanges: false);
         return Ok();
     }
 
     [HttpGet("/matchWinners/{id}")]
-    public IActionResult GetAllByWinnerHamsterId(int id) //TODO: testing
+    public IActionResult GetAllByWinnerHamsterId(int id)
     {
         var battles = _service.BattleService.GetAllByWinnerHamsterId(id, trackChanges: false);
+        if(battles.Count() == 0)
+        {
+            return NotFound();
+        }
         return Ok(battles);
     }
 }

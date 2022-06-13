@@ -20,6 +20,6 @@ public record HamsterPostDto
     [Required(ErrorMessage = "Property 'ImgName' is required")]
     public string ImgName { get; set; }
 
-    [Required(ErrorMessage = "Property 'ImgData' is required (Base64 string of image file)")]
+    [Required(ErrorMessage = "Property 'ImgData' is required (Should be a Base64 string of image file)")]
     public string ImgData { get; set; }
 }

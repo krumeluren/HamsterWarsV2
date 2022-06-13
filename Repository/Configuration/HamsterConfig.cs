@@ -1,10 +1,8 @@
-﻿
-using Core.Domain.Entities.Models;
+﻿using Core.Domain.Entities.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Repository.Configuration;
-
 internal class HamsterConfig : IEntityTypeConfiguration<Hamster>
 {
     public void Configure(EntityTypeBuilder<Hamster> builder)
@@ -17,12 +15,12 @@ internal class HamsterConfig : IEntityTypeConfiguration<Hamster>
         builder.Property(p => p.ImgName).IsRequired().HasMaxLength(100);
         builder.HasData
             (
-            new Hamster { Id = 1, Name = "Hamster1", Age = 1, FavFood = "Nuts", Loves = "Running", ImgName = "1.jpg" },
-            new Hamster { Id = 2, Name = "Hamster2", Age = 2, FavFood = "Carrot", Loves = "Sleeping", ImgName = "2.jpg" },
-            new Hamster { Id = 3, Name = "Hamster3", Age = 3, FavFood = "Lettuce", Loves = "Climbing", ImgName = "3.jpg" },
-            new Hamster { Id = 4, Name = "Hamster4", Age = 4, FavFood = "Spinach", Loves = "Digging", ImgName = "4.jpg" },
-            new Hamster { Id = 5, Name = "Hamster5", Age = 5, FavFood = "Banana", Loves = "Jumping", ImgName = "5.jpg" },
-            new Hamster { Id = 6, Name = "Hamster6", Age = 6, FavFood = "Carrot", Loves = "Running", ImgName = "6.jpg" }
+            new Hamster { Id = 1, Name = "Hamster1", Age = 1, FavFood = "Food1", Loves = "Loves1", ImgName = "hamster-1.jpg" },
+            new Hamster { Id = 2, Name = "Hamster2", Age = 2, FavFood = "Food2", Loves = "Loves2", ImgName = "hamster-2.jpg" },
+            new Hamster { Id = 3, Name = "Hamster3", Age = 3, FavFood = "Food3", Loves = "Loves3", ImgName = "hamster-3.jpg" },
+            new Hamster { Id = 4, Name = "Hamster4", Age = 4, FavFood = "Food4", Loves = "Loves4", ImgName = "hamster-4.jpg" },
+            new Hamster { Id = 5, Name = "Hamster5", Age = 5, FavFood = "Food5", Loves = "Loves5", ImgName = "hamster-5.jpg" },
+            new Hamster { Id = 6, Name = "Hamster6", Age = 6, FavFood = "Food6", Loves = "Loves6", ImgName = "hamster-6.jpg" }
             );
     }
 }

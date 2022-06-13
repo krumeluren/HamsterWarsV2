@@ -8,9 +8,9 @@
 
     @if (DisplayModalButton)
     {
-        <EditHamsterModal hamster=@hamster></EditHamsterModal>
+        <EditHamsterModal onModified="OnDeleted" hamster=@hamster></EditHamsterModal>
     }
-    
+
     <h4 class="mb-3 text-uppercase text-secondary">@hamster.Name</h4>
     <table class="table">
         <tbody style="padding: 0;">
@@ -51,6 +51,7 @@
 </div>
 
 @code {
+
     /// <summary>
     /// The hamster to be displayed in the card.
     /// </summary>
@@ -75,5 +76,14 @@
     [Parameter]
     public bool IsPreview { get; set; }
 
+    /// <summary>
+    /// When the hamster delete button is clicked
+    /// </summary>
+    [Parameter]
+    public EventCallback onDeleted { get; set; }
 
+    public async void OnDeleted()
+    {
+        await onDeleted.InvokeAsync();
+    }
 }

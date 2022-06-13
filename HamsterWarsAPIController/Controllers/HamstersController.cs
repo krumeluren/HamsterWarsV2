@@ -3,7 +3,6 @@ using Core.Contracts.Service.Contracts;
 using Core.Shared.DataTransferObject.Hamster;
 
 namespace Presentation.HamsterWarsAPIController.Controllers;
-
 [Route("/hamsters")]
 [ApiController]
 public class HamstersController : ControllerBase
@@ -53,16 +52,13 @@ public class HamstersController : ControllerBase
         {
             return UnprocessableEntity(ModelState);
         }
-
-        //randomize name for image file
+        
+        //random name for image file
         hamster.ImgName = Guid.NewGuid().ToString() + hamster.ImgName;
-
+        
+        _service.ImageHandler.Upload(hamster.ImgData, hamster.ImgName);
         var createdHamster = _service.HamsterService.Create(hamster, trackChanges: false);
-        if (createdHamster != null)
-        {
-
-            _service.ImageHandler.Upload(hamster.ImgData, hamster.ImgName);
-        }
+        
         return Ok(new { id = createdHamster.Id });
     }
 
@@ -85,7 +81,7 @@ public class HamstersController : ControllerBase
     }
 
     [HttpGet("/winners")]
-    public IActionResult GetWinners() //TODO: testing
+    public IActionResult GetWinners()
     {
         var hamsters = _service.HamsterService.TopWinners(5, trackChanges: false);
         foreach (var hamster in hamsters)
@@ -96,7 +92,7 @@ public class HamstersController : ControllerBase
     }
 
     [HttpGet("/losers")]
-    public IActionResult GetLosers() //TODO: testing
+    public IActionResult GetLosers()
     {
         var hamsters =  _service.HamsterService.TopLosers(5, trackChanges: false);
         foreach (var hamster in hamsters)

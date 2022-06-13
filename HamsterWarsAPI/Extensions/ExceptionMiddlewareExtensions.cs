@@ -2,7 +2,6 @@
 using Core.Domain.Entities.ErrorModel;
 using Core.Domain.Entities.Exceptions;
 using Microsoft.AspNetCore.Diagnostics;
-
 using System.Net;
 
 namespace Presentation.HamsterWarsAPI.Extensions;
@@ -25,6 +24,8 @@ public static class ExceptionMiddlewareExtensions
                     {
                         NotFoundException => StatusCodes.Status404NotFound,
                         BadRequestException => StatusCodes.Status400BadRequest,
+                        FormatException => StatusCodes.Status400BadRequest,
+                        InvalidOperationException => StatusCodes.Status503ServiceUnavailable,
                         _ => StatusCodes.Status500InternalServerError
                     };
 

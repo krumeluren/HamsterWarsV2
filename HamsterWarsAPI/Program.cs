@@ -6,7 +6,7 @@ using Core.Contracts.Repo.Contracts;
 var builder = WebApplication.CreateBuilder(args);
 LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
 
-// Add services to the container.
+// Add services
 builder.Services.ConfigureCors();
 builder.Services.ConfigureIISIntegration();
 builder.Services.ConfigureLoggerService();
@@ -24,7 +24,7 @@ builder.Services.AddControllers(config =>
   .AddCustomCSVFormatter()
     .AddApplicationPart(typeof(Presentation.HamsterWarsAPIController.AssemblyReference).Assembly);
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+//Add Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -45,7 +45,6 @@ if (app.Environment.IsProduction())
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
-
 
 app.UseForwardedHeaders(new ForwardedHeadersOptions
 {

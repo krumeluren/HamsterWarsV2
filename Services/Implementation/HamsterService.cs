@@ -20,7 +20,7 @@ public class HamsterService : IHamsterService
         _mapper = mapper;
     }
 
-    public HamsterGetDto Create(HamsterPostDto entity, bool trackChanges) //TODO: trackchanges remove?
+    public HamsterGetDto Create(HamsterPostDto entity, bool trackChanges)
     {
         var hamster = _mapper.Map<Hamster>(entity);
         _repo.Hamster.CreateHamster(hamster);
@@ -61,9 +61,10 @@ public class HamsterService : IHamsterService
         var allHamsters = _repo.Hamster.GetAll(trackChanges);
         if (allHamsters.Count() == 0)
         {
-            throw new InvalidOperationException("No hamsters found");
-        }
+            throw new NoHamstersFoundException("No hamsters found");
+        }        
         var hamster = allHamsters.OrderBy(x => Guid.NewGuid()).FirstOrDefault();
+
         return _mapper.Map<HamsterGetDto>(hamster);
     }
 

@@ -13,7 +13,7 @@ public class MappingProfile : Profile
         CreateMap<HamsterPostDto, Hamster>();
         CreateMap<HamsterPostDto, Hamster>().ReverseMap();
 
-        CreateMap<HamsterPutDto, Hamster>()
+        CreateMap<HamsterPutDto, Hamster>() //Map only non-null properties
             .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null));
 
         CreateMap<Battle, BattleGetDto>();

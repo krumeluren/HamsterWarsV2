@@ -1,10 +1,8 @@
-﻿
-using Core.Domain.Entities.Models;
+﻿using Core.Domain.Entities.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Repository.Configuration;
-
 internal class BattleConfig : IEntityTypeConfiguration<Battle>
 {
     public void Configure(EntityTypeBuilder<Battle> builder)

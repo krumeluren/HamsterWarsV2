@@ -24,6 +24,13 @@ public class BattleService : IBattleService
         var battleEntity = _mapper.Map<Battle>(battle);
         var winner = _repo.Hamster.GetById(battle.WinnerHamsterId, trackChanges);
         var loser = _repo.Hamster.GetById(battle.LoserHamsterId, trackChanges);
+
+        if(winner == null)
+            throw new HamsterNotFoundException(battle.WinnerHamsterId);
+
+        if (loser == null)
+            throw new HamsterNotFoundException(battle.LoserHamsterId);
+
         winner.Games += 1;
         loser.Games += 1;
         winner.Wins += 1;
@@ -37,6 +44,9 @@ public class BattleService : IBattleService
     public void Delete(int id, bool trackChanges)
     {
         var battle = _repo.Battle.GetById(id, trackChanges);
+        if (battle == null)
+            throw new BattleNotFoundException(id);
+        
         _repo.Battle.DeleteBattle(battle);
         _repo.Save();
     }
@@ -51,9 +61,8 @@ public class BattleService : IBattleService
     {
         var hamster = _repo.Hamster.GetById(hamsterId, trackChanges);
         if (hamster == null)
-        {
             throw new HamsterNotFoundException(hamsterId);
-        }
+        
         var battles = _repo.Battle.GetAll(trackChanges).Where(x => x.WinnerHamsterId == hamsterId);
         return _mapper.Map<IEnumerable<BattleGetDto>>(battles);
     }
@@ -61,6 +70,9 @@ public class BattleService : IBattleService
     public BattleGetDto GetById(int id, bool trackChanges)
     {
         var battle = _repo.Battle.GetById(id, trackChanges);
+        if (battle == null)
+            throw new BattleNotFoundException(id);
+        
         return _mapper.Map<BattleGetDto>(battle);
     }
 }

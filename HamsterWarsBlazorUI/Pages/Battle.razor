@@ -9,13 +9,20 @@
 <div class="p-1 text-center bg-light">
     <h1 class="p-2 px-3 text-uppercase text-primary">Battle</h1>
 
-    @if (hamsters == null)
+    @if(ErrorLoadingBattle == true){
+        <div class="alert alert-danger">
+            <strong>Could not load a battle</strong>
+        </div>
+    }
+
+    else if (hamsters == null)
     {
         <p><em>Loading new battle...</em></p>
     }
+    
     else
     {
-        if (hamsters.Length <= 0)
+        if (hamsters.Length == 0)
         {
             <p><em>No hamsters are available...</em></p>
         }
@@ -41,6 +48,8 @@
     private Hamster[]? previousHamsters;
 
     private Hamster[]? hamsters;
+
+    private bool ErrorLoadingBattle = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -83,27 +92,28 @@
     /// </summary>
     private async void CreateBattle()
     {
-        Hamster? hamster11 = null;
-        Hamster? hamster22 = null;
+        Hamster? hamster1 = null;
+        Hamster? hamster2 = null;
 
         //Retry 3 times
         for (int i = 0; i < 3; i++)
         {
-            if (hamster11 == null || hamster22 == null || hamster11.Id == hamster22.Id)
+            if (hamster1 == null || hamster2 == null || hamster1.Id == hamster2.Id)
             {
-                hamster11 = await Http.GetFromJsonAsync<Hamster>("/hamsters/random");
-                hamster22 = await Http.GetFromJsonAsync<Hamster>("/hamsters/random");
+                hamster1 = await Http.GetFromJsonAsync<Hamster>("/hamsters/random");
+                hamster2 = await Http.GetFromJsonAsync<Hamster>("/hamsters/random");
             }
             else
             {
                 break;
             }
         }
-        if (hamster11 == null || hamster22 == null || hamster11.Id == hamster22.Id)
+        if (hamster1 == null || hamster2 == null || hamster1.Id == hamster2.Id)
         {
-            throw new InvalidOperationException("Could not find two different hamsters to battle");
+            ErrorLoadingBattle = true;
+            Console.Error.WriteLine("Could not load a battle");
         }
-        hamsters = new Hamster[] { hamster11, hamster22 };
+        hamsters = new Hamster[] { hamster1, hamster2 };
         StateHasChanged();
     }
 

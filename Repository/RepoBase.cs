@@ -25,10 +25,11 @@ public abstract class RepoBase<T> : IRepoBase<T> where T : class
 
     public IQueryable<T> FindAll(bool trackChanges)
     {
+
         return !trackChanges ?
-            _context.Set<T>().AsNoTracking()
-            :
-            _context.Set<T>();
+        _context.Set<T>().AsNoTracking()
+        :
+        _context.Set<T>();
     }
 
     public IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression, bool trackChanges)
@@ -41,6 +42,7 @@ public abstract class RepoBase<T> : IRepoBase<T> where T : class
 
     public void Update(T entity)
     {
+
         _context.Update(entity);
     }
 }

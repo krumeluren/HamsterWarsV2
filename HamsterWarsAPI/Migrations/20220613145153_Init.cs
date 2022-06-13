@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Presentation.HamsterWarsAPI.Migrations
+namespace HamsterWarsAPI.Migrations
 {
     public partial class Init : Migration
     {
@@ -19,9 +20,9 @@ namespace Presentation.HamsterWarsAPI.Migrations
                     FavFood = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Loves = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     ImgName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Wins = table.Column<int>(type: "int", nullable: false),
-                    Losses = table.Column<int>(type: "int", nullable: false),
-                    Games = table.Column<int>(type: "int", nullable: false)
+                    Wins = table.Column<int>(type: "int", nullable: true),
+                    Losses = table.Column<int>(type: "int", nullable: true),
+                    Games = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -58,28 +59,28 @@ namespace Presentation.HamsterWarsAPI.Migrations
                 columns: new[] { "Id", "Age", "FavFood", "Games", "ImgName", "Losses", "Loves", "Name", "Wins" },
                 values: new object[,]
                 {
-                    { 1, 1, "Nuts", 0, "1.jpg", 0, "Running", "Hamster1", 0 },
-                    { 2, 2, "Carrot", 0, "2.jpg", 0, "Sleeping", "Hamster2", 0 },
-                    { 3, 3, "Lettuce", 0, "3.jpg", 0, "Climbing", "Hamster3", 0 },
-                    { 4, 4, "Spinach", 0, "4.jpg", 0, "Digging", "Hamster4", 0 },
-                    { 5, 5, "Banana", 0, "5.jpg", 0, "Jumping", "Hamster5", 0 },
-                    { 6, 6, "Carrot", 0, "6.jpg", 0, "Running", "Hamster6", 0 }
+                    { 1, 1, "Food1", 0, "hamster-1.jpg", 0, "Loves1", "Hamster1", 0 },
+                    { 2, 2, "Food2", 0, "hamster-2.jpg", 0, "Loves2", "Hamster2", 0 },
+                    { 3, 3, "Food3", 0, "hamster-3.jpg", 0, "Loves3", "Hamster3", 0 },
+                    { 4, 4, "Food4", 0, "hamster-4.jpg", 0, "Loves4", "Hamster4", 0 },
+                    { 5, 5, "Food5", 0, "hamster-5.jpg", 0, "Loves5", "Hamster5", 0 },
+                    { 6, 6, "Food6", 0, "hamster-6.jpg", 0, "Loves6", "Hamster6", 0 }
                 });
 
             migrationBuilder.InsertData(
                 table: "Battles",
                 columns: new[] { "Id", "LoserHamsterId", "TimeOfPost", "WinnerHamsterId" },
-                values: new object[] { 1, 1, new DateTime(2022, 6, 9, 11, 33, 15, 203, DateTimeKind.Local).AddTicks(6542), 2 });
+                values: new object[] { 1, 1, new DateTime(2022, 6, 13, 16, 51, 53, 149, DateTimeKind.Local).AddTicks(1552), 2 });
 
             migrationBuilder.InsertData(
                 table: "Battles",
                 columns: new[] { "Id", "LoserHamsterId", "TimeOfPost", "WinnerHamsterId" },
-                values: new object[] { 2, 3, new DateTime(2022, 6, 9, 11, 33, 15, 203, DateTimeKind.Local).AddTicks(6584), 2 });
+                values: new object[] { 2, 3, new DateTime(2022, 6, 13, 16, 51, 53, 149, DateTimeKind.Local).AddTicks(1587), 2 });
 
             migrationBuilder.InsertData(
                 table: "Battles",
                 columns: new[] { "Id", "LoserHamsterId", "TimeOfPost", "WinnerHamsterId" },
-                values: new object[] { 3, 2, new DateTime(2022, 6, 9, 11, 33, 15, 203, DateTimeKind.Local).AddTicks(6586), 4 });
+                values: new object[] { 3, 2, new DateTime(2022, 6, 13, 16, 51, 53, 149, DateTimeKind.Local).AddTicks(1588), 4 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Battles_LoserHamsterId",

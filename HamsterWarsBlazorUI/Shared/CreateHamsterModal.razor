@@ -29,6 +29,12 @@
     public bool ShowDialog { get; set; }
 
     /// <summary>
+    /// When this modal is closed
+    /// </summary>
+    [Parameter]
+    public EventCallback onClose { get; set; }
+    
+    /// <summary>
     /// Show the modal
     /// </summary>
     public void Show()
@@ -41,6 +47,7 @@
     /// </summary>
     public void Close()
     {
+        onClose.InvokeAsync();
         ShowDialog = false;
     }
 }

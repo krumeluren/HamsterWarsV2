@@ -17,7 +17,7 @@ public class RepositoryContextFactory : IDesignTimeDbContextFactory<RepoContext>
         var builder = new DbContextOptionsBuilder<RepoContext>()
             .UseSqlServer(config
             .GetConnectionString("sqlConnection"),
-            b => b.MigrationsAssembly("HamsterWars")
+            b => b.MigrationsAssembly("HamsterWarsAPI")
             );
 
         return new RepoContext(builder.Options);

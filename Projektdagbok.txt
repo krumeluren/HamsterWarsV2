@@ -24,4 +24,9 @@ Lagt till Swagger
 Dag 5 
 Lagt till och kopplat ihop det tidigare frontend projektet med det nya APIet.
 Hantering för uppladdning och hämtning av bildfiler emellan frontend och backend så att frontend är helt separerad.
-Utvecklat på services och controller resurser för Battles.
+Utvecklat på services och controller resurser för Battles och yttligare på Hamster Controller. 
+
+
+Dag 6
+Lagt till mer felhantering och felmeddelanden på olika ställen  
+Testat de nya API resurserna med postman/swagger/webbapp.

@@ -7,7 +7,7 @@ public class BattleRepo : RepoBase<Battle>, IBattleRepo
     public BattleRepo(RepoContext repoContext) : base(repoContext)
     {
     }
-
+    
     public Battle CreateBattle(Battle battle)
     {
         Create(battle);

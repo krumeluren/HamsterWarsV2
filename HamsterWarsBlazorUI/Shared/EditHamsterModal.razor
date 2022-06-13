@@ -69,14 +69,23 @@
     {
         ShowDialog = false;
     }
+
     /// <summary>
     /// Post the hamster to the server to delete it
     /// </summary>
     public async void DeleteHamster()
     {
+
         confirm = false;
         await Http.DeleteAsync($"/hamsters/{hamster.Id}");
         Close();
+        await onModified.InvokeAsync();
         StateHasChanged();
     }
+
+    /// <summary>
+    /// When the hamster delete button is clicked
+    /// </summary>
+    [Parameter]
+    public EventCallback onModified { get; set; }
 }
