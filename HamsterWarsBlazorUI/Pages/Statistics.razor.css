@@ -1,0 +1,56 @@
+﻿body {
+}
+
+
+.card-container {
+    width: 200px;
+    margin: auto;
+}
+
+@media (max-width: 1300px) {
+    .card-container {
+        width: 300px;
+    }
+}
+
+.grid-container {
+    flex-wrap: wrap;
+    width: 100%;
+    display: inline-flex;
+}
+
+.grid-wrap {
+    padding-top: 50px;
+    flex-wrap: wrap;
+    width: 60vw;
+    display: block;
+    margin: auto;
+}
+
+/*Small window*/
+@media (max-width: 1467px) {
+    .grid-wrap {
+        width: 40vw;
+    }
+}
+
+/*Tablet*/
+@media (max-width: 1000px) {
+    .grid-wrap {
+        width: 60vw;
+    }
+}
+
+/*Tablet Portrait*/
+@media (max-width: 650px) {
+    .grid-wrap {
+        width: 80vw;
+    }
+}
+
+/*Mobile*/
+@media (max-width: 500px) {
+    .grid-wrap {
+        width: 50vw;
+    }
+}
