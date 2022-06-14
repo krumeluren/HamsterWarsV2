@@ -25,6 +25,7 @@ public class HamsterService : IHamsterService
         var hamster = _mapper.Map<Hamster>(entity);
         _repo.Hamster.CreateHamster(hamster);
         _repo.Save();
+        _logger.LogInfo($"CREATE Hamster created with id: {hamster.Id}, Name: {hamster.Name}, Age: {hamster.Age}, Image: {hamster.ImgName}.");
         return _mapper.Map<HamsterGetDto>(hamster);
     }
 
@@ -38,6 +39,7 @@ public class HamsterService : IHamsterService
         }
         _repo.Hamster.DeleteHamster(hamster);
         _repo.Save();
+        _logger.LogInfo($"DELETE Hamster with id: {hamster.Id} was deleted.");
     }
 
     public IEnumerable<HamsterGetDto> GetAll(bool trackChanges)
@@ -91,6 +93,7 @@ public class HamsterService : IHamsterService
         }       
         _mapper.Map(entity, hamster);
         _repo.Save();
+        _logger.LogInfo($"UPDATE Hamster with id: {hamster.Id} was updated. Name: {hamster.Name}, Age: {hamster.Age}, Image: {hamster.ImgName}, Games {hamster.Games}, Wins: {hamster.Wins}, Losses: {hamster.Losses}.");
         return _mapper.Map<HamsterGetDto>(hamster);
     }
 }

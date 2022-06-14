@@ -38,6 +38,7 @@ public class BattleService : IBattleService
 
         _repo.Battle.CreateBattle(battleEntity);
         _repo.Save();
+        _logger.LogInfo($"CREATE Battle created with ids: { battleEntity.Id}, winner: {winner.Id}, loser: {loser.Id}" );
         return _mapper.Map<BattleGetDto>(battleEntity);
     }
 
@@ -49,6 +50,7 @@ public class BattleService : IBattleService
         
         _repo.Battle.DeleteBattle(battle);
         _repo.Save();
+        _logger.LogInfo($"DELETE Battle with id: {id} was deleted.");
     }
 
     public IEnumerable<BattleGetDto> GetAll(bool trackChanges)
@@ -72,7 +74,6 @@ public class BattleService : IBattleService
         var battle = _repo.Battle.GetById(id, trackChanges);
         if (battle == null)
             throw new BattleNotFoundException(id);
-        
         return _mapper.Map<BattleGetDto>(battle);
     }
 }
