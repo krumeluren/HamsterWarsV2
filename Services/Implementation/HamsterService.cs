@@ -65,7 +65,7 @@ public class HamsterService : IHamsterService
         {
             throw new HamsterNotFoundException(id);
         }
-        var battles = _repo.Battle.GetAllByWinnerHamster(id, trackChanges);
+        var battles = hamster.BattlesWon;
 
         var defeatedHamsters = new List<HamsterGetDto>();
 
@@ -74,7 +74,11 @@ public class HamsterService : IHamsterService
             if(battle.LoserHamsterId != null)
             {
                 var defeatedHamster = _repo.Hamster.GetById((int)battle.LoserHamsterId, trackChanges);
-                defeatedHamsters.Add(_mapper.Map<HamsterGetDto>(defeatedHamster));
+                var defeatedHamsterDto = _mapper.Map<HamsterGetDto>(defeatedHamster);                            
+                if (!defeatedHamsters.Exists(h => h == defeatedHamsterDto))
+                {
+                    defeatedHamsters.Add(defeatedHamsterDto);
+                }            
             }                
         }
         if (defeatedHamsters.Count == 0)
