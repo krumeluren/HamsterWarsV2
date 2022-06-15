@@ -1,32 +1,77 @@
 ﻿@inject HttpClient Http
+@inject NavigationManager NavigationManager
 @page "/hamster/{Id:int}"
 @using System.Net.Http.Json
+@using HamsterWarsBlazorUI.Shared.MatchTable
 @using Presentation.HamsterWarsBlazorUI.Models
+@using System.Text.Json
 
-<div class="grid-wrap">
-    <div class="grid-container">
-        <div class="card-container">
-        <HamsterCard hamster="Hamster"></HamsterCard>
+@{
+    if (Hamster != null || Matches != null)
+    {
+        <div class="grid-wrap">
+            <div class="grid-container">
+                <div class="card-container">
+                    <HamsterCard hamster="Hamster"></HamsterCard>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
-
+        <MatchTable Matches="@Matches"></MatchTable>
+    }
+    else if (Error)
+    {
+        <ErrorMessage Message="Error loading Hamster"></ErrorMessage>
+    }
+    else
+    {
+        <span>Loading...</span>
+    }
+}
 
 @code {
-    
+
     [Parameter]
     public int Id { get; set; }
-    
+
     Hamster Hamster { get; set; }
+
+    IEnumerable<Match> Matches { get; set; }
+
+    public bool Error { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        Hamster = await Http.GetFromJsonAsync<Hamster>($"/hamsters/{Id}");
-        if (Hamster == null)
+        var responseMessage = await Http.GetAsync($"/hamsters/{Id}");
+        if (!responseMessage.IsSuccessStatusCode)
         {
-            
-            throw new Exception("Hamster not found");
+            Error = true;
+            return;
         }
 
+        Hamster = await responseMessage.Content.ReadFromJsonAsync<Hamster>();
+        var matchesResponseMessage = await Http.GetAsync($"/matchWinners/{Hamster.Id}");
+
+        if (!matchesResponseMessage.IsSuccessStatusCode)
+        {
+            Error = true;
+            return;
+        }
+
+        var defeatedResponseMessage = await Http.GetAsync($"/defeated/{Hamster.Id}");
+        if (!defeatedResponseMessage.IsSuccessStatusCode)
+        {
+            Error = true;
+            return;
+        }
+
+        Matches = await matchesResponseMessage.Content.ReadFromJsonAsync<IEnumerable<Match>>();
+        Matches = Matches.OrderByDescending(m => m.TimeOfPost);
+        var defeated = await defeatedResponseMessage.Content.ReadFromJsonAsync<IEnumerable<Hamster>>();
+
+        foreach (var match in Matches)
+        {
+            match.WinnerHamster = Hamster;
+            match.LoserHamster = defeated.FirstOrDefault(h => h.Id == match.LoserHamsterId);
+        }
     }
 }

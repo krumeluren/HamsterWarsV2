@@ -1,17 +1,18 @@
 ﻿@using Presentation.HamsterWarsBlazorUI.Models
+@inject NavigationManager NavigationManager
 
 <link href="../Pages/HamsterCard.razor.css" rel="stylesheet">
 
 <div class="card battlecard">
 
-    <img src="@string.Format($"data:image/png;base64,{hamster.ImgData}")" alt="...">
+    <img style="cursor: pointer" @onclick="(e => NavigateToHamster(hamster.Id))" src="@string.Format($"data:image /png;base64,{hamster.ImgData}")" alt="...">
 
     @if (DisplayModalButton)
     {
         <EditHamsterModal onModified="OnDeleted" hamster=@hamster></EditHamsterModal>
     }
 
-    <h4 class="mb-3 text-uppercase text-secondary">@hamster.Name</h4>
+    <h4 style="cursor: pointer" @onclick="(e => NavigateToHamster(hamster.Id))" class="mb-3 text-uppercase text-secondary">@hamster.Name</h4>
     <table class="table">
         <tbody style="padding: 0;">
             <tr>
@@ -79,5 +80,10 @@
     public async void OnDeleted()
     {
         await onDeleted.InvokeAsync();
+    }
+
+    private void NavigateToHamster(int id)
+    {
+        NavigationManager.NavigateTo($"hamster/{id}", forceLoad: true);
     }
 }

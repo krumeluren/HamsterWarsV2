@@ -1,6 +1,6 @@
 ﻿@using Presentation.HamsterWarsBlazorUI.Models
 @inject HttpClient Http
-@inject NavigationManager UriHelper
+@inject NavigationManager NavigationManager
 
 <th style="width: 15%" scope="row" class="border-0">
     <div class="p-2">
@@ -29,6 +29,9 @@
 
     private void NavigateToHamster(int id)
     {
-        UriHelper.NavigateTo($"hamster/{id}");
+        NavigationManager.NavigateTo($"hamster/{id}", forceLoad: true);
+
     }
+
+
 }
