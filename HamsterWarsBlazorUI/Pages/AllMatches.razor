@@ -1,0 +1,27 @@
+﻿@inject HttpClient Http
+@page "/history"
+@using System.Net.Http.Json
+@using HamsterWarsBlazorUI.Shared.MatchTable
+@using Presentation.HamsterWarsBlazorUI.Models
+
+
+<MatchTable Matches="@Battles" ></MatchTable>
+
+@code {
+
+    public IEnumerable<Match>? Battles { get; set; }
+    public IEnumerable<Hamster>? Hamsters { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Battles = await Http.GetFromJsonAsync<IEnumerable<Match>>("/matches");
+        Battles = Battles.OrderByDescending(m => m.TimeOfPost);
+        Hamsters = await Http.GetFromJsonAsync<IEnumerable<Hamster>>("/hamsters");
+        
+        foreach (var battle in Battles)
+        {
+            battle.WinnerHamster = Hamsters.FirstOrDefault(h => h.Id == battle.WinnerHamsterId);
+            battle.LoserHamster = Hamsters.FirstOrDefault(h => h.Id == battle.LoserHamsterId);
+        }
+    }
+}

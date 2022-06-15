@@ -1,0 +1,6 @@
+﻿
+img {
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    cursor: pointer;
+}

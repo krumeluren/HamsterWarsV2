@@ -1,0 +1,48 @@
+﻿@using Presentation.HamsterWarsBlazorUI.Models
+
+<th style="max-width: 15%" scope="row" class="border-0">
+    <div class="p-2">
+        <div class="ml-3 d-inline-block align-middle">
+            <span class=" text-muted fw-light font-italic mb-0  d-inline-block align-middle text-truncate">
+                @TimeOfPost.ToString("ddd dd-MM-yyyy HH:mm")
+            </span>
+            <span class="text-muted font-weight-normal font-italic d-block">
+                @{
+                    var daysAgo = (DateTime.Now - TimeOfPost).Days;
+                    var hoursAgo = (DateTime.Now - TimeOfPost).Hours;
+                    var minutesAgo = (DateTime.Now - TimeOfPost).Minutes;
+
+                    if (daysAgo == 0 && hoursAgo == 0 && minutesAgo == 0)
+                    {
+                        @:Just now
+                    }
+                    else if (daysAgo == 0 && hoursAgo == 0 && minutesAgo < 60)
+                    {
+                        @minutesAgo @:minutes ago
+                    }
+
+                    else if (daysAgo == 0)
+                    {
+                        @hoursAgo @:hours ago
+                    }
+                    else if (daysAgo == 1)
+                    {
+                        @:Yesterday
+                    }
+                    else
+                    {
+                        @daysAgo @:days ago
+                    }
+                }
+            </span>
+
+        </div>
+    </div>
+</th>
+
+@code {
+
+    [Parameter]
+    public DateTime TimeOfPost { get; set; }
+
+}

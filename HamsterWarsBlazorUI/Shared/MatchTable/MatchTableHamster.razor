@@ -1,0 +1,34 @@
+﻿@using Presentation.HamsterWarsBlazorUI.Models
+@inject HttpClient Http
+@inject NavigationManager UriHelper
+
+<th style="width: 15%" scope="row" class="border-0">
+    <div class="p-2">
+
+        <img @onclick="(e => NavigateToHamster(hamster.Id))" src="@string.Format($"data:image/png;base64,{hamster.ImgData}")" alt="" width="70" class="img-fluid rounded shadow-sm">
+
+        <div class="ml-3 d-inline-block align-middle">
+            <h6 style="cursor: pointer" @onclick="(e => NavigateToHamster(hamster.Id))" class="mb-0  d-inline-block align-middle text-truncate">
+                @hamster.Name
+            </h6>
+            <span class="text-muted font-weight-normal font-italic d-block">
+                <span class="text-muted fw-light font-italic ">
+                    Age:
+                </span>
+                @hamster.Age
+            </span>
+
+        </div>
+    </div>
+</th>
+
+@code {
+
+    [Parameter]
+    public Hamster hamster { get; set; }
+
+    private void NavigateToHamster(int id)
+    {
+        UriHelper.NavigateTo($"hamster/{id}");
+    }
+}

@@ -1,0 +1,65 @@
+﻿@using HamsterWarsBlazorUI.Shared.MatchTable
+@using Presentation.HamsterWarsBlazorUI.Models
+@inject HttpClient Http
+
+<div class="p-1 text-center bg-light">
+    <h1 class="p-2 px-3 text-uppercase text-primary">Hamster List</h1>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col" class="border-0 bg-light">
+                <div class="p-2 px-3 text-uppercase">Winner</div>
+            </th>
+            <th scope="col" class="border-0 bg-light">
+                <div class="p-2 px-3 text-uppercase">Loser</div>
+            </th>
+            <th scope="col" class="border-0 bg-light">
+                <div class="p-2 px-3 text-uppercase">Date</div>
+            </th>
+            <th scope="col" class="border-0 bg-light">
+                <div class="p-2 px-3 text-uppercase">Delete</div>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Matches == null)
+        {
+            <tr>
+                <th>
+                    <p><em>Loading...</em></p>
+                </th>
+            </tr>
+        }
+        else
+        {
+            @foreach (var match in Matches)
+            {
+                <tr>
+                    <MatchTableHamster hamster=match.WinnerHamster></MatchTableHamster>
+                    <MatchTableHamster hamster=match.LoserHamster></MatchTableHamster>
+                    <MatchTableTimeOfPost TimeOfPost="match.TimeOfPost"></MatchTableTimeOfPost>
+
+                    <th scope="row" class="border-0">
+                        <button class="btn btn-danger" @onclick="(e => Delete(match))">Delete</button>
+                    </th>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+@code {
+    [Parameter]
+    public IEnumerable<Match> Matches { get; set; }
+
+
+
+    public async void Delete(Match match)
+    {
+        Matches = Matches.Where(m => m.Id != match.Id);
+        StateHasChanged();
+        Http.DeleteAsync($"/matches/{match.Id}");
+    }
+
+}
