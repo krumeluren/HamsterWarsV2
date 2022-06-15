@@ -5,7 +5,6 @@ Modifierat relevanta klasser för att intergrera hamster och battle.
 
 Dag 2
 Lagt till configurations för hamster och battle, max namn längd osv. Skapat testdata. 
-
 Skapat enkel logik i HamsterController så alla resurser når service metoderna. Ska utvidgas med felhantering senare.  
 Testat alla HamsterController resurser med Postman/webbläsare så att de kan nås av frontend. 
 
@@ -23,10 +22,16 @@ Lagt till Swagger
 
 Dag 5 
 Lagt till och kopplat ihop det tidigare frontend projektet med det nya APIet.
-Hantering för uppladdning och hämtning av bildfiler emellan frontend och backend så att frontend är helt separerad.
+Hantering för uppladdning och hämtning av bildfiler. 
+Hittade inget specifikt på nätet så jag gör den som en service som man använder ifrån controllers. Bilden skickas som Base64 string.
+Designar så att frontend är helt separerad från resten av systemet.
+
 Utvecklat på services och controller resurser för Battles och yttligare på Hamster Controller resurser enligt vg-nivå
 
 
 Dag 6
 Lagt till mer exceptions, felhantering och felmeddelanden på olika ställen så att frontend får mer information om fel.
 Testat de nya API resurserna med postman/swagger/webbapp.
+
+Dag 7
+Arbetat mest på frontend och lagt till vg vyerna.
