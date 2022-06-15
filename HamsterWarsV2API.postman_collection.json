@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "ba818b65-2f93-45c0-b071-d9de99b1ca31",
+		"_postman_id": "30dff7e4-71e7-414c-88a4-861b1ebb18e6",
 		"name": "HamsterWarsV2API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "21173936"
@@ -319,6 +319,27 @@
 					"port": "5001",
 					"path": [
 						"losers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Defeated Hamsters",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5001/defeated/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"",
+						"defeated",
+						"1"
 					]
 				}
 			},

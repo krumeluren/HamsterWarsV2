@@ -38,5 +38,5 @@ Arbetat mest på frontend och lagt till vg vyerna.
 
 Dag 8
 Lagt till Levelup GET defeated/hamsterId resursen och testat den med postman.
-Bygger HamsterProfile komponent i frontend projektet där man kan se en hamster + alla dess matcher
-Lagt till felmeddelanden och en error page i frontend
+Bygger HamsterProfile komponent i frontend projektet där man kan se en hamster + alla dess matcher.
+Lagt till felmeddelanden i frontend
