@@ -1,5 +1,4 @@
 ﻿@using Presentation.HamsterWarsBlazorUI.Models
-
 @inject HttpClient Http
 @page "/battle"
 <PageTitle>Battle</PageTitle>
@@ -9,17 +8,16 @@
 <div class="p-1 text-center bg-light">
     <h1 class="p-2 px-3 text-uppercase text-primary">Battle</h1>
 
-    @if(ErrorLoadingBattle == true){
-        <div class="alert alert-danger">
-            <strong>Could not load a battle</strong>
-        </div>
+    @if (Error)
+    {
+        <ErrorMessage Message="Error starting battle."></ErrorMessage>
     }
 
     else if (hamsters == null)
     {
         <p><em>Loading new battle...</em></p>
     }
-    
+
     else
     {
         if (hamsters.Length == 0)
@@ -49,7 +47,7 @@
 
     private Hamster[]? hamsters;
 
-    private bool ErrorLoadingBattle = false;
+    private bool Error = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -73,17 +71,13 @@
     private void Vote(int winnerId, int loserId)
     {
         Http.PostAsJsonAsync("/matches", new { WinnerHamsterId = winnerId, LoserHamsterId = loserId });
-        BattleResult(winnerId, loserId);
+        BattleResult();
         CreateBattle();
     }
-    /// <summary>
-    /// Get the previous hamsters from the server
-    /// </summary>
-    private async void BattleResult(int winnerId, int loserId)
+
+    private async void BattleResult()
     {
-        var hamster1 = await Http.GetFromJsonAsync<Hamster>($"/hamsters/{winnerId}");
-        var hamster2 = await Http.GetFromJsonAsync<Hamster>($"/hamsters/{loserId}");
-        previousHamsters = new Hamster[] { hamster1, hamster2 };
+        previousHamsters = new Hamster[] { hamsters[0], hamsters[1] };
         StateHasChanged();
     }
 
@@ -100,8 +94,15 @@
         {
             if (hamster1 == null || hamster2 == null || hamster1.Id == hamster2.Id)
             {
-                hamster1 = await Http.GetFromJsonAsync<Hamster>("/hamsters/random");
-                hamster2 = await Http.GetFromJsonAsync<Hamster>("/hamsters/random");
+                var responseMessage1 = await Http.GetAsync("/hamsters/random");
+                var responseMessage2 = await Http.GetAsync("/hamsters/random");
+                if (!responseMessage1.IsSuccessStatusCode || !responseMessage2.IsSuccessStatusCode)
+                {
+                    Error = true;
+                    return;
+                }
+                hamster1 = await responseMessage1.Content.ReadFromJsonAsync<Hamster>();
+                hamster2 = await responseMessage2.Content.ReadFromJsonAsync<Hamster>();
             }
             else
             {
@@ -110,8 +111,8 @@
         }
         if (hamster1 == null || hamster2 == null || hamster1.Id == hamster2.Id)
         {
-            ErrorLoadingBattle = true;
-            Console.Error.WriteLine("Could not load a battle");
+            Error = true;
+            return;
         }
         hamsters = new Hamster[] { hamster1, hamster2 };
         StateHasChanged();

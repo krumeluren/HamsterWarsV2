@@ -4,22 +4,48 @@
 @using HamsterWarsBlazorUI.Shared.MatchTable
 @using Presentation.HamsterWarsBlazorUI.Models
 
-
-<MatchTable Matches="@Battles" ></MatchTable>
+@if(Error)
+{
+    <ErrorMessage Message="Error loading matches"></ErrorMessage>
+}
+else if (Battles == null)
+{
+    <span>Loading...</span>
+}
+else
+{
+    <MatchTable Matches="@Battles" ></MatchTable>
+}
 
 @code {
 
     public IEnumerable<Match>? Battles { get; set; }
     public IEnumerable<Hamster>? Hamsters { get; set; }
+    private bool Error { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        Battles = await Http.GetFromJsonAsync<IEnumerable<Match>>("/matches");
+        
+        var responseMessage = await Http.GetAsync("/matches");
+        if (!responseMessage.IsSuccessStatusCode)
+        {
+            Error = true;
+            return;
+            
+        }
+        Battles = await responseMessage.Content.ReadFromJsonAsync<IEnumerable<Match>>();
         Battles = Battles.OrderByDescending(m => m.TimeOfPost);
-        Hamsters = await Http.GetFromJsonAsync<IEnumerable<Hamster>>("/hamsters");
+        
+        var hamstersResponseMessage = await Http.GetAsync("/hamsters");
+        if (!hamstersResponseMessage.IsSuccessStatusCode)
+        {
+            Error = true;
+            return;
+        }
+        Hamsters = await hamstersResponseMessage.Content.ReadFromJsonAsync<IEnumerable<Hamster>>();
         
         foreach (var battle in Battles)
-        {
+        {        
             battle.WinnerHamster = Hamsters.FirstOrDefault(h => h.Id == battle.WinnerHamsterId);
             battle.LoserHamster = Hamsters.FirstOrDefault(h => h.Id == battle.LoserHamsterId);
         }

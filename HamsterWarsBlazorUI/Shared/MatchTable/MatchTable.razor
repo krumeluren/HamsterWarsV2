@@ -23,37 +23,28 @@
         </tr>
     </thead>
     <tbody>
-        @if (Matches == null)
+        @if(Matches.Count() == 0)
+        {
+            <ErrorMessage Message="No matches found"></ErrorMessage>
+        }
+        @foreach (var match in Matches)
         {
             <tr>
-                <th>
-                    <p><em>Loading...</em></p>
+                <MatchTableHamster hamster=match.WinnerHamster></MatchTableHamster>
+                <MatchTableHamster hamster=match.LoserHamster></MatchTableHamster>
+                <MatchTableTimeOfPost TimeOfPost="match.TimeOfPost"></MatchTableTimeOfPost>
+
+                <th scope="row" class="border-0">
+                    <button class="btn btn-danger" @onclick="(e => Delete(match))">Delete</button>
                 </th>
             </tr>
-        }
-        else
-        {
-            @foreach (var match in Matches)
-            {
-                <tr>
-                    <MatchTableHamster hamster=match.WinnerHamster></MatchTableHamster>
-                    <MatchTableHamster hamster=match.LoserHamster></MatchTableHamster>
-                    <MatchTableTimeOfPost TimeOfPost="match.TimeOfPost"></MatchTableTimeOfPost>
-
-                    <th scope="row" class="border-0">
-                        <button class="btn btn-danger" @onclick="(e => Delete(match))">Delete</button>
-                    </th>
-                </tr>
-            }
         }
     </tbody>
 </table>
 
 @code {
     [Parameter]
-    public IEnumerable<Match> Matches { get; set; }
-
-
+    public IEnumerable<Match> Matches { get; set; } = new List<Match>();
 
     public async void Delete(Match match)
     {

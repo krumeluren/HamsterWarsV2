@@ -1,4 +1,4 @@
-﻿Använder CompanyEmployeeDEMO som boilerplate.
+﻿Använder CompanyEmployee projektet som boilerplate.
 Lagt till hamster och battle entities. Skapat interface för repository och services och implementerar utan någon logik ännu.
 Skapa tomma hamster och battle controllers.
 Modifierat relevanta klasser för att intergrera hamster och battle.
@@ -35,3 +35,8 @@ Testat de nya API resurserna med postman/swagger/webbapp.
 
 Dag 7
 Arbetat mest på frontend och lagt till vg vyerna.
+
+Dag 8
+Lagt till Levelup GET defeated/hamsterId resursen och testat den med postman.
+Bygger HamsterProfile komponent i frontend projektet där man kan se en hamster + alla dess matcher
+Lagt till felmeddelanden och en error page i frontend

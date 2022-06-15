@@ -7,68 +7,71 @@
 </div>
 
 
-
-<div class="grid-wrap">
-    <div class="p-1 text-center bg-light">
-        <h3 class="p-2 px-3 text-uppercase text-info">All-time Winners</h3>
-    </div>
-    <div class="grid-container">
-        @if (winners != null && winners.Count() > 0)
-        {
-            @foreach (var hamster in winners)
+@if (Error)
+{
+    <ErrorMessage Message="Could not load statistics."></ErrorMessage>
+}
+else
+{
+    <div class="grid-wrap">
+        <div class="p-1 text-center bg-light">
+            <h3 class="p-2 px-3 text-uppercase text-info">All-time Winners</h3>
+        </div>
+        <div class="grid-container">
+            @if (winners != null && winners.Count() > 0)
             {
-                <div class="card-container">
-                    <HamsterCard DisplayGames onDeleted="OnInitializedAsync" hamster="@hamster"></HamsterCard>
-                </div>
-            }
-        }
-        else
-        {
-            <div class="card-container">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">No hamsters found</h5>
+                @foreach (var hamster in winners)
+                {
+                    <div class="card-container">
+                        <HamsterCard Clickable DisplayGames onDeleted="OnInitializedAsync" hamster="@hamster"></HamsterCard>
                     </div>
-                </div>
-            </div>
-        }
-    </div>
-</div>
-<div class="grid-wrap">
-    <div class="p-1 text-center bg-light">
-        <h3 class="p-2 px-3 text-uppercase text-danger">All-time Losers</h3>
-    </div>
-    <div class="grid-container">
-        @if (losers != null && losers.Count() > 0)
-        {
-            @foreach (var hamster in losers)
+                }
+            }
+            else
             {
-                <div class="card-container">
-                    <HamsterCard DisplayGames onDeleted="OnInitializedAsync" hamster="@hamster"></HamsterCard>
-                </div>
+                <span>Loading...</span>
             }
-        }
-        else
-        {
-            <div class="card-container">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">No hamsters found</h5>
-                    </div>
-                </div>
-            </div>
-        }
+        </div>
     </div>
-</div>
+    <div class="grid-wrap">
+        <div class="p-1 text-center bg-light">
+            <h3 class="p-2 px-3 text-uppercase text-danger">All-time Losers</h3>
+        </div>
+        <div class="grid-container">
+            @if (losers != null && losers.Count() > 0)
+            {
+                @foreach (var hamster in losers)
+                {
+                    <div class="card-container">
+                        <HamsterCard Clickable DisplayGames onDeleted="OnInitializedAsync" hamster="@hamster"></HamsterCard>
+                    </div>
+                }
+            }
+            else
+            {
+                <span>Loading...</span>
+            }
+        </div>
+    </div>
+}
 
 @code {
 
     private Hamster[]? winners;
     private Hamster[]? losers;
 
+    private bool Error { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
-        winners = await Http.GetFromJsonAsync<Hamster[]?>("/winners");
-        losers = await Http.GetFromJsonAsync<Hamster[]?>("/losers");
+        var responseMessageWinners = await Http.GetAsync("/winners");
+        var responseMessageLosers = await Http.GetAsync("/losers");
+        if (!responseMessageWinners.IsSuccessStatusCode || !responseMessageLosers.IsSuccessStatusCode)
+        {
+            Error = true;
+            return;
+        }
+        winners = await responseMessageWinners.Content.ReadFromJsonAsync<Hamster[]>();
+        losers = await responseMessageLosers.Content.ReadFromJsonAsync<Hamster[]>();
     }
 }

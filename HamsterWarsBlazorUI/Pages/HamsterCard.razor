@@ -66,6 +66,12 @@
     public bool DisplayGames { get; set; }
 
     /// <summary>
+    /// Whether to navigate to the hamsters page when clicked.
+    /// </summary>
+    [Parameter]
+    public bool Clickable { get; set; }
+
+    /// <summary>
     /// Whether to display the button for opening the edit modal
     /// </summary>
     [Parameter]
@@ -84,6 +90,10 @@
 
     private void NavigateToHamster(int id)
     {
-        NavigationManager.NavigateTo($"hamster/{id}", forceLoad: true);
+        if (Clickable)
+        {
+            NavigationManager.NavigateTo($"hamster/{id}", forceLoad: true);
+        }
+        
     }
 }

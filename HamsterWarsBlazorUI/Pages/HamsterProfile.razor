@@ -7,12 +7,12 @@
 @using System.Text.Json
 
 @{
-    if (Hamster != null || Matches != null)
+    if (Hamster != null)
     {
         <div class="grid-wrap">
             <div class="grid-container">
                 <div class="card-container">
-                    <HamsterCard hamster="Hamster"></HamsterCard>
+                    <HamsterCard Clickable hamster="Hamster"></HamsterCard>
                 </div>
             </div>
         </div>
@@ -35,7 +35,7 @@
 
     Hamster Hamster { get; set; }
 
-    IEnumerable<Match> Matches { get; set; }
+    IEnumerable<Match> Matches { get; set; } = new List<Match>();
 
     public bool Error { get; set; }
 

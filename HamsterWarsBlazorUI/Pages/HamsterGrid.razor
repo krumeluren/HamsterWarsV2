@@ -6,30 +6,31 @@
     <h1 class="p-2 px-3 text-uppercase text-primary">Gallery</h1>
 </div>
 
-<CreateHamsterModal onClose="OnInitializedAsync"></CreateHamsterModal>
-<div class="grid-wrap">
-    <div class="grid-container">
-        @if (hamsters != null && hamsters.Count() > 0)
-        {
-            @foreach (var hamster in hamsters)
+@if (Error)
+{
+    <ErrorMessage Message="Could not load hamsters"></ErrorMessage>
+}
+else
+{
+    <CreateHamsterModal onClose="OnInitializedAsync"></CreateHamsterModal>
+    <div class="grid-wrap">
+        <div class="grid-container">
+            @if (hamsters != null && hamsters.Count() > 0)
             {
-                <div class="card-container">
-                    <HamsterCard onDeleted="OnInitializedAsync" DisplayModalButton hamster="@hamster"></HamsterCard>
-                </div>
-            }
-        }
-        else
-        {
-            <div class="card-container">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">No hamsters found</h5>
+                @foreach (var hamster in hamsters)
+                {
+                    <div class="card-container">
+                        <HamsterCard Clickable onDeleted="OnInitializedAsync" DisplayModalButton hamster="@hamster"></HamsterCard>
                     </div>
-                </div>
-            </div>
-        }
+                }
+            }
+            else
+            {
+                <span>Loading...</span>
+            }
+        </div>
     </div>
-</div>
+}
 
 @code {
     /// <summary>
@@ -37,8 +38,17 @@
     /// </summary>
     private Hamster[]? hamsters;
 
+    private bool Error;
+
     protected override async Task OnInitializedAsync()
     {
-        hamsters = await Http.GetFromJsonAsync<Hamster[]?>("/hamsters");
+        var response = await Http.GetAsync("/hamsters");
+        if (!response.IsSuccessStatusCode)
+        {
+            Error = true;
+            return;
+
+        }
+        hamsters = await response.Content.ReadFromJsonAsync<Hamster[]>();
     }
 }
