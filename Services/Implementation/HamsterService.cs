@@ -58,6 +58,32 @@ public class HamsterService : IHamsterService
         return _mapper.Map<HamsterGetDto>(hamster);
     }
 
+    public IEnumerable<HamsterGetDto> GetDefeated(int id, bool trackChanges)
+    {
+        var hamster = _repo.Hamster.GetById(id, trackChanges);
+        if (hamster == null)
+        {
+            throw new HamsterNotFoundException(id);
+        }
+        var battles = _repo.Battle.GetAllByWinnerHamster(id, trackChanges);
+
+        var defeatedHamsters = new List<HamsterGetDto>();
+
+        foreach (var battle in battles)
+        {
+            if(battle.LoserHamsterId != null)
+            {
+                var defeatedHamster = _repo.Hamster.GetById((int)battle.LoserHamsterId, trackChanges);
+                defeatedHamsters.Add(_mapper.Map<HamsterGetDto>(defeatedHamster));
+            }                
+        }
+        if (defeatedHamsters.Count == 0)
+        {
+            throw new NoHamstersFoundException("The hamster has not defeated any other hamsters.");
+        }
+        return defeatedHamsters;
+    }
+
     public HamsterGetDto GetRandom(bool trackChanges)
     {
         var allHamsters = _repo.Hamster.GetAll(trackChanges);

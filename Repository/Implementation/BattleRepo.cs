@@ -24,6 +24,11 @@ public class BattleRepo : RepoBase<Battle>, IBattleRepo
         return FindAll(trackChanges).ToList();
     }
 
+    public IEnumerable<Battle> GetAllByWinnerHamster(int id, bool trackChanges)
+    {
+        return FindByCondition(b => b.WinnerHamsterId == id, trackChanges).ToList();
+    }
+
     public Battle GetById(int id, bool trackChanges)
     {
         return FindByCondition(b => b.Id.Equals(id), trackChanges).SingleOrDefault();

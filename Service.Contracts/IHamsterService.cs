@@ -36,4 +36,8 @@ public interface IHamsterService
     /// Get hamsters by most losses
     /// </summary>
     IEnumerable<HamsterGetDto> TopLosers(int count, bool trackChanges);
+    /// <summary>
+    /// Get all hamsters the hamster has won against
+    /// </summary>
+    IEnumerable<HamsterGetDto> GetDefeated(int id, bool trackChanges);
 }

@@ -101,4 +101,15 @@ public class HamstersController : ControllerBase
         }
         return Ok(hamsters);
     }
+
+    [HttpGet("/defeated/{id}")]
+    public IActionResult GetDefeated(int id)
+    {
+        var hamsters = _service.HamsterService.GetDefeated(id, trackChanges: false);
+        foreach (var hamster in hamsters)
+        {
+            hamster.ImgData = _service.ImageHandler.GetFile(hamster.ImgName);
+        }
+        return Ok(hamsters);
+    }
 }

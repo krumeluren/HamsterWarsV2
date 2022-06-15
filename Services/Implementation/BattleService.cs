@@ -64,8 +64,8 @@ public class BattleService : IBattleService
         var hamster = _repo.Hamster.GetById(hamsterId, trackChanges);
         if (hamster == null)
             throw new HamsterNotFoundException(hamsterId);
-        
-        var battles = _repo.Battle.GetAll(trackChanges).Where(x => x.WinnerHamsterId == hamsterId);
+
+        var battles = _repo.Battle.GetAllByWinnerHamster(hamsterId, trackChanges);
         return _mapper.Map<IEnumerable<BattleGetDto>>(battles);
     }
 
