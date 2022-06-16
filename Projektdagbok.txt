@@ -3,40 +3,49 @@ Lagt till hamster och battle entities. Skapat interface för repository och serv
 Skapa tomma hamster och battle controllers.
 Modifierat relevanta klasser för att intergrera hamster och battle.
 
-Dag 2
+--
 Lagt till configurations för hamster och battle, max namn längd osv. Skapat testdata. 
 Skapat enkel logik i HamsterController så alla resurser når service metoderna. Ska utvidgas med felhantering senare.  
-Testat alla HamsterController resurser med Postman/webbläsare så att de kan nås av frontend. 
+Testat alla HamsterController resurser med Postman/webappen så att de kan nås av frontend. 
 
-Dag 3
+--
 Implementerar logik i Hamster Repository och Service metoderna så att man kan nå och ändra i databasen från HamsterController. 
+Skapat DTO objekt för GET, POST och PUT.
+Löste så att automapper endast uppdaterar de värden som är icke-null i HamsterPutDTO, så man kan skicka in enstaka värden att uppdatera.
+Fungerar mer som Patch men i specifikationen står det att det ska vara t.ex. PUT (wins: 10, games: 12)
+
 Lagt till valideringsattribut för de olika Hamster DTOs.
 Testat crud operationer med Postman + testat olika situationer och felhanteringar.
 
-Dag 4
+--
 Implementerat Repo och service för Battles.
 Gjort så att OnDelete av en Hamster sätter alla referencer i Battles till null. 
 så att battles som en hamster deltagit i kan vara kvar även om hamstern tas bort.
+
 Lagt till Swagger
 
 
-Dag 5 
+--
 Lagt till och kopplat ihop det tidigare frontend projektet med det nya APIet.
-Hantering för uppladdning och hämtning av bildfiler. 
-Hittade inget specifikt på nätet så jag gör den som en service som man använder ifrån controllers. Bilden skickas som Base64 string.
+Skapat hantering för uppladdning och hämtning av bildfiler. 
+Hittade inget specifikt på nätet så jag gör den som en service som man använder ifrån controllers. Bilden skickas över api som Base64 string.
 Designar så att frontend är helt separerad från resten av systemet.
 
 Utvecklat på services och controller resurser för Battles och yttligare på Hamster Controller resurser enligt vg-nivå
 
 
-Dag 6
+--
 Lagt till mer exceptions, felhantering och felmeddelanden på olika ställen så att frontend får mer information om fel.
 Testat de nya API resurserna med postman/swagger/webbapp.
 
-Dag 7
+--
 Arbetat mest på frontend och lagt till vg vyerna.
+Problem med att få Hamster/id vyn att uppdatera med ny hamster när id-parametern ändras. 
+Löst med forceLoad: true i NavigateTo() metoden
 
-Dag 8
+--
 Lagt till Levelup GET defeated/hamsterId resursen och testat den med postman.
 Bygger HamsterProfile komponent i frontend projektet där man kan se en hamster + alla dess matcher.
+Att hämta många bilder från APIet gör att sidorna blir väldigt sega att ladda in (historik, hamsterprofile). 
+Hade kunnat låta frontend ha åtkomst till bildmappen direkt men jag vill fortsätta ha projektet separat. Får komma på en bättre lösning men inte till inlämmningen.
 Lagt till felmeddelanden i frontend
