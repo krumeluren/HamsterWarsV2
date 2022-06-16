@@ -13,12 +13,7 @@
         <ErrorMessage Message="Error starting battle."></ErrorMessage>
     }
 
-    else if (hamsters == null)
-    {
-        <p><em>Loading new battle...</em></p>
-    }
-
-    else
+    else if (hamsters != null)
     {
         if (hamsters.Length == 0)
         {
@@ -40,6 +35,12 @@
             </div>
         }
     }
+
+    else
+    {
+        <p><em>Loading new battle...</em></p>
+
+    }
 </div>
 
 @code {
@@ -47,7 +48,7 @@
 
     private Hamster[]? hamsters;
 
-    private bool Error = false;
+    private bool Error { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -99,6 +100,7 @@
                 if (!responseMessage1.IsSuccessStatusCode || !responseMessage2.IsSuccessStatusCode)
                 {
                     Error = true;
+                    StateHasChanged();
                     return;
                 }
                 hamster1 = await responseMessage1.Content.ReadFromJsonAsync<Hamster>();
@@ -112,6 +114,7 @@
         if (hamster1 == null || hamster2 == null || hamster1.Id == hamster2.Id)
         {
             Error = true;
+            StateHasChanged();
             return;
         }
         hamsters = new Hamster[] { hamster1, hamster2 };

@@ -1,5 +1,5 @@
 ﻿@inject HttpClient Http
-@page "/hamstergrid"
+@page "/gallery"
 @using Presentation.HamsterWarsBlazorUI.Models
 
 <div class="p-1 text-center bg-light">
@@ -46,9 +46,16 @@ else
         if (!response.IsSuccessStatusCode)
         {
             Error = true;
+            StateHasChanged();
             return;
 
         }
         hamsters = await response.Content.ReadFromJsonAsync<Hamster[]>();
+        if(hamsters.Count() == 0)
+        {
+            Error = true;
+            StateHasChanged();
+            return;
+        }
     }
 }

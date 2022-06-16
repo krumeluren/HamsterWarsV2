@@ -69,6 +69,7 @@ else
         if (!responseMessageWinners.IsSuccessStatusCode || !responseMessageLosers.IsSuccessStatusCode)
         {
             Error = true;
+            StateHasChanged();
             return;
         }
         winners = await responseMessageWinners.Content.ReadFromJsonAsync<Hamster[]>();
