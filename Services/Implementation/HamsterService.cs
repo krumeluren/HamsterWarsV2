@@ -103,9 +103,9 @@ public class HamsterService : IHamsterService
     public IEnumerable<HamsterGetDto> TopLosers(int count, bool trackChanges)
     {
         var hamsters = _repo.Hamster.GetAll(trackChanges);
-        if(hamsters.Count() == 0)
+        if(hamsters.Count() != count)
         {
-            throw new NoHamstersFoundException("No hamsters found");
+            throw new NoHamstersFoundException($"Not enough hamsters found: {count}");
         }
         var topLosers = hamsters.OrderByDescending(x => x.Losses).Take(count);
         return _mapper.Map<IEnumerable<HamsterGetDto>>(topLosers);
@@ -114,9 +114,9 @@ public class HamsterService : IHamsterService
     public IEnumerable<HamsterGetDto> TopWinners(int count, bool trackChanges)
     {
         var hamsters = _repo.Hamster.GetAll(trackChanges);
-        if (hamsters.Count() == 0)
+        if (hamsters.Count() != count)
         {
-            throw new NoHamstersFoundException("No hamsters found");
+            throw new NoHamstersFoundException($"Not enough hamsters found: {count}");
         }
         var topWinners = hamsters.OrderByDescending(x => x.Wins).Take(count);
         return _mapper.Map<IEnumerable<HamsterGetDto>>(topWinners);
