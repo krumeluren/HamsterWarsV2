@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace HamsterWarsAPI.Migrations
+namespace ApplicationAPI.Migrations
 {
-    public partial class Init : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -27,6 +27,32 @@ namespace HamsterWarsAPI.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Hamsters", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PlantCategories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TimeOfPost = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PlantCategories", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Plants",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TimeOfPost = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Plants", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -54,6 +80,30 @@ namespace HamsterWarsAPI.Migrations
                         principalColumn: "Id");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "PlantPlantCategory",
+                columns: table => new
+                {
+                    PlantCategoriesId = table.Column<int>(type: "int", nullable: false),
+                    PlantsId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PlantPlantCategory", x => new { x.PlantCategoriesId, x.PlantsId });
+                    table.ForeignKey(
+                        name: "FK_PlantPlantCategory_PlantCategories_PlantCategoriesId",
+                        column: x => x.PlantCategoriesId,
+                        principalTable: "PlantCategories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PlantPlantCategory_Plants_PlantsId",
+                        column: x => x.PlantsId,
+                        principalTable: "Plants",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "Hamsters",
                 columns: new[] { "Id", "Age", "FavFood", "Games", "ImgName", "Losses", "Loves", "Name", "Wins" },
@@ -70,17 +120,17 @@ namespace HamsterWarsAPI.Migrations
             migrationBuilder.InsertData(
                 table: "Battles",
                 columns: new[] { "Id", "LoserHamsterId", "TimeOfPost", "WinnerHamsterId" },
-                values: new object[] { 1, 1, new DateTime(2022, 6, 13, 16, 51, 53, 149, DateTimeKind.Local).AddTicks(1552), 2 });
+                values: new object[] { 1, 1, new DateTime(2023, 2, 22, 23, 5, 50, 466, DateTimeKind.Local).AddTicks(1028), 2 });
 
             migrationBuilder.InsertData(
                 table: "Battles",
                 columns: new[] { "Id", "LoserHamsterId", "TimeOfPost", "WinnerHamsterId" },
-                values: new object[] { 2, 3, new DateTime(2022, 6, 13, 16, 51, 53, 149, DateTimeKind.Local).AddTicks(1587), 2 });
+                values: new object[] { 2, 3, new DateTime(2023, 2, 22, 23, 5, 50, 466, DateTimeKind.Local).AddTicks(1067), 2 });
 
             migrationBuilder.InsertData(
                 table: "Battles",
                 columns: new[] { "Id", "LoserHamsterId", "TimeOfPost", "WinnerHamsterId" },
-                values: new object[] { 3, 2, new DateTime(2022, 6, 13, 16, 51, 53, 149, DateTimeKind.Local).AddTicks(1588), 4 });
+                values: new object[] { 3, 2, new DateTime(2023, 2, 22, 23, 5, 50, 466, DateTimeKind.Local).AddTicks(1069), 4 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Battles_LoserHamsterId",
@@ -91,6 +141,11 @@ namespace HamsterWarsAPI.Migrations
                 name: "IX_Battles_WinnerHamsterId",
                 table: "Battles",
                 column: "WinnerHamsterId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlantPlantCategory_PlantsId",
+                table: "PlantPlantCategory",
+                column: "PlantsId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -99,7 +154,16 @@ namespace HamsterWarsAPI.Migrations
                 name: "Battles");
 
             migrationBuilder.DropTable(
+                name: "PlantPlantCategory");
+
+            migrationBuilder.DropTable(
                 name: "Hamsters");
+
+            migrationBuilder.DropTable(
+                name: "PlantCategories");
+
+            migrationBuilder.DropTable(
+                name: "Plants");
         }
     }
 }

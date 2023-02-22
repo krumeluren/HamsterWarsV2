@@ -1,4 +1,5 @@
 using Presentation.HamsterWarsAPI.Extensions;
+
 using Microsoft.AspNetCore.HttpOverrides;
 using NLog;
 using Core.Contracts.Repo.Contracts;
@@ -22,7 +23,7 @@ builder.Services.AddControllers(config =>
     config.ReturnHttpNotAcceptable = true;
 }).AddXmlDataContractSerializerFormatters()
   .AddCustomCSVFormatter()
-    .AddApplicationPart(typeof(Presentation.HamsterWarsAPIController.AssemblyReference).Assembly);
+    .AddApplicationPart(typeof(Presentation.APIController.AssemblyReference).Assembly);
 
 //Add Swagger
 builder.Services.AddEndpointsApiExplorer();
