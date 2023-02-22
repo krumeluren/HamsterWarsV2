@@ -14,7 +14,4 @@ public class RepoContext : DbContext
     }
     public DbSet<Hamster> Hamsters { get; set; }
     public DbSet<Battle> Battles { get; set; }
-
-    public DbSet<Plant> Plants { get; set; }
-    public DbSet<PlantCategory> PlantCategories { get; set; }
 }
