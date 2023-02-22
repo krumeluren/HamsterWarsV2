@@ -5,4 +5,7 @@ public interface IServiceManager
     IHamsterService HamsterService { get; }
     IBattleService BattleService { get; }
     IFileHandler ImageHandler { get; }
+
+    IPlantCategoryService PlantCategoryService { get; }
+    IPlantService PlantService { get; }
 }

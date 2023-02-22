@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace HamsterWarsAPI.Migrations
+namespace ApplicationAPI.Migrations
 {
     [DbContext(typeof(RepoContext))]
-    [Migration("20220613145153_Init")]
-    partial class Init
+    [Migration("20230222220550_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -54,21 +54,21 @@ namespace HamsterWarsAPI.Migrations
                         {
                             Id = 1,
                             LoserHamsterId = 1,
-                            TimeOfPost = new DateTime(2022, 6, 13, 16, 51, 53, 149, DateTimeKind.Local).AddTicks(1552),
+                            TimeOfPost = new DateTime(2023, 2, 22, 23, 5, 50, 466, DateTimeKind.Local).AddTicks(1028),
                             WinnerHamsterId = 2
                         },
                         new
                         {
                             Id = 2,
                             LoserHamsterId = 3,
-                            TimeOfPost = new DateTime(2022, 6, 13, 16, 51, 53, 149, DateTimeKind.Local).AddTicks(1587),
+                            TimeOfPost = new DateTime(2023, 2, 22, 23, 5, 50, 466, DateTimeKind.Local).AddTicks(1067),
                             WinnerHamsterId = 2
                         },
                         new
                         {
                             Id = 3,
                             LoserHamsterId = 2,
-                            TimeOfPost = new DateTime(2022, 6, 13, 16, 51, 53, 149, DateTimeKind.Local).AddTicks(1588),
+                            TimeOfPost = new DateTime(2023, 2, 22, 23, 5, 50, 466, DateTimeKind.Local).AddTicks(1069),
                             WinnerHamsterId = 4
                         });
                 });
@@ -192,6 +192,53 @@ namespace HamsterWarsAPI.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Core.Domain.Entities.Models.Plant", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("TimeOfPost")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Plants");
+                });
+
+            modelBuilder.Entity("Core.Domain.Entities.Models.PlantCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("TimeOfPost")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PlantCategories");
+                });
+
+            modelBuilder.Entity("PlantPlantCategory", b =>
+                {
+                    b.Property<int>("PlantCategoriesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PlantsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PlantCategoriesId", "PlantsId");
+
+                    b.HasIndex("PlantsId");
+
+                    b.ToTable("PlantPlantCategory");
+                });
+
             modelBuilder.Entity("Core.Domain.Entities.Models.Battle", b =>
                 {
                     b.HasOne("Core.Domain.Entities.Models.Hamster", "LoserHamster")
@@ -205,6 +252,21 @@ namespace HamsterWarsAPI.Migrations
                     b.Navigation("LoserHamster");
 
                     b.Navigation("WinnerHamster");
+                });
+
+            modelBuilder.Entity("PlantPlantCategory", b =>
+                {
+                    b.HasOne("Core.Domain.Entities.Models.PlantCategory", null)
+                        .WithMany()
+                        .HasForeignKey("PlantCategoriesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Core.Domain.Entities.Models.Plant", null)
+                        .WithMany()
+                        .HasForeignKey("PlantsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Core.Domain.Entities.Models.Hamster", b =>
